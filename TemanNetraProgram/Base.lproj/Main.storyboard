@@ -77,7 +77,7 @@
                                 <state key="normal" image="Panduan"/>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MaD-ev-ab9">
-                                <rect key="frame" x="0.0" y="852" width="414" height="30"/>
+                                <rect key="frame" x="0.0" y="798" width="414" height="30"/>
                                 <connections>
                                     <action selector="buttonAlertSave:" destination="b3q-yk-uX7" eventType="touchUpInside" id="KHp-GM-hh6"/>
                                 </connections>

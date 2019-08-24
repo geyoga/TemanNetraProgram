@@ -15,6 +15,7 @@ import Vision
 class CameraViewController: UIViewController {
 
     var counter = 0
+    var cameraDevice: AVCaptureDevice?
     @IBOutlet weak var imageView: UIImageView!
     let synthesizer = AVSpeechSynthesizer()
     var session = AVCaptureSession()
@@ -37,6 +38,7 @@ class CameraViewController: UIViewController {
     var kiri = false
     var kanan = false
     var sudahTahan = 1
+    var spokenTextSize: Float = 0
     var voiceOverCondition = UIAccessibility.isVoiceOverRunning
     
     override func viewDidLayoutSubviews() {
@@ -50,8 +52,8 @@ class CameraViewController: UIViewController {
         startTextRecognition()
         titikTengahDeviceX = Float(imageView.frame.width/2)
         titikTengahDeviceY = Float(imageView.frame.height/2)
-        print("TitikX: ", titikTengahDeviceX)
-        print("TitikY: ", titikTengahDeviceY)
+        //print("TitikX: ", titikTengahDeviceX)
+        //print("TitikY: ", titikTengahDeviceY)
         
         //func segue swipe
         let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(swipeAction(swipe:)))
@@ -109,13 +111,13 @@ class CameraViewController: UIViewController {
             cameraView.session = session
             
             let cameraDevices = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera], mediaType: AVMediaType.video, position: .back)
-            var cameraDevice: AVCaptureDevice?
             for device in cameraDevices.devices {
                 if device.position == .back {
                     cameraDevice = device
                     break
                 }
             }
+            
             do {
                 let captureDeviceInput = try AVCaptureDeviceInput(device: cameraDevice!)
                 if session.canAddInput(captureDeviceInput) {
@@ -145,8 +147,7 @@ class CameraViewController: UIViewController {
     func startTextRecognition(){
             let textRequest = VNRecognizeTextRequest(completionHandler: self.recognizeTextHandler)
             textRequest.usesLanguageCorrection = false
-            //textRequest.regionOfInterest = CGRect(x: 0.25, y: 0.25, width: 0.5, height: 0.5)
-            //textRequest.minimumTextHeight = 0.0625
+        textRequest.usesLanguageCorrection = false
             self.requests = [textRequest]
         }
         
@@ -154,7 +155,6 @@ class CameraViewController: UIViewController {
             if(synthesizer.isSpeaking == false)
             {
                 guard let observations = request.results as? [VNRecognizedTextObservation] else {print("no result"); return}
-                
                 DispatchQueue.main.async()
                 {
                     self.avgConfidence = 0
@@ -170,6 +170,7 @@ class CameraViewController: UIViewController {
                     self.kiri = false
                     self.kanan = false
                     self.recognizedTextSize = 12
+                    self.spokenTextSize = 12
                     self.imageView.layer.sublayers?.removeSubrange(1...)
                     for observation in observations
                     {
@@ -177,58 +178,64 @@ class CameraViewController: UIViewController {
                     
                         self.titikTengahTextX = Float(penampungTitikTengahText.x)
                         self.titikTengahTextY = Float(penampungTitikTengahText.y)
-                        print("X :", self.titikTengahTextX)
-                        print("Y :", self.titikTengahTextY)
-                        if(self.titikTengahTextX < self.titikTengahDeviceX)
+                        //print("X :", self.titikTengahTextX)
+                        //print("Y :", self.titikTengahTextY)
+                        if(self.titikTengahTextX < self.titikTengahDeviceX && self.titikTengahDeviceX - self.titikTengahTextX < self.koordinatTextTerdekatX)
                         {
                             self.koordinatTextTerdekatX = self.titikTengahDeviceX - self.titikTengahTextX
                             self.kiri = true
                             self.kanan = false
-                            print("perlu ke kiri")
+                            self.spokenTextSize = self.recognizedTextSize
+                            self.spokenText = observation.topCandidates(1).first!.string
+                            //print("perlu ke kiri")
                         }
-                        else if(self.titikTengahTextX - self.titikTengahDeviceX < self.koordinatTextTerdekatX)
+                        else if(self.titikTengahTextX > self.titikTengahDeviceX && self.titikTengahTextX - self.titikTengahDeviceX < self.koordinatTextTerdekatX)
                         {
                             self.koordinatTextTerdekatX = self.titikTengahTextX - self.titikTengahDeviceX
                             self.kiri = false
                             self.kanan = true
-                            print("perlu ke kanan")
+                            self.spokenTextSize = self.recognizedTextSize
+                            self.spokenText = observation.topCandidates(1).first!.string
+                            //print("perlu ke kanan")
                         }
                         
-                        if(self.titikTengahTextY < self.titikTengahDeviceY)
+                        if(self.titikTengahTextY < self.titikTengahDeviceY && self.titikTengahDeviceY - self.titikTengahTextY < self.koordinatTextTerdekatY)
                         {
                             self.koordinatTextTerdekatY = self.titikTengahDeviceY - self.titikTengahTextY
                             self.atas = true
                             self.bawah = false
-                            print("perlu ke atas")
+                            self.spokenTextSize = self.recognizedTextSize
+                            self.spokenText = observation.topCandidates(1).first!.string
+                            //print("perlu ke atas")
                         }
-                        else if(self.titikTengahTextY - self.titikTengahDeviceY < self.koordinatTextTerdekatY)
+                        else if(self.titikTengahTextY > self.titikTengahDeviceY && self.titikTengahTextY - self.titikTengahDeviceY < self.koordinatTextTerdekatY)
                         {
                             self.koordinatTextTerdekatY = self.titikTengahTextY - self.titikTengahDeviceY
                             self.atas = false
                             self.bawah = true
-                            print("perlu ke bawah")
+                            self.spokenTextSize = self.recognizedTextSize
+                            self.spokenText = observation.topCandidates(1).first!.string
+                            //print("perlu ke bawah")
                         }
-                        guard let candidate = observation.topCandidates(1).first else { continue }
-                        self.totalConfidence += candidate.confidence
-                        self.observationCounter += 1
-                        print("Koordinat terdekat X: ", self.koordinatTextTerdekatX)
-                        print("Koordinat terdekat Y: ", self.koordinatTextTerdekatY)
-                        if(self.recognizedTextSize > 5 && self.recognizedTextSize < 26)
+                        
+                        //print("Koordinat terdekat X: ", self.koordinatTextTerdekatX)
+                        //print("Koordinat terdekat Y: ", self.koordinatTextTerdekatY)
+                        if(self.recognizedTextSize > 5)
                         {
+                            guard let candidate = observation.topCandidates(1).first else {continue}
+                            self.totalConfidence += candidate.confidence
+                            self.observationCounter += 1
                             self.recognizedText += candidate.string + " "
+                            //print(candidate.confidence)
                         }
                     }
-                    if(self.recognizedTextSize < 5)
+                    //print("Ukuran text: ", self.spokenTextSize, self.spokenText)
+                    if(self.spokenTextSize < 5)
                     {
                         let speechUtterance = AVSpeechUtterance(string: "Mendekat")
                         speechUtterance.voice = AVSpeechSynthesisVoice(language: "id")
                         self.synthesizer.speak(speechUtterance)
-                    }
-                    else if(self.recognizedTextSize > 26)
-                    {
-                        let speechUtterance = AVSpeechUtterance(string: "Menjauh")
-                        speechUtterance.voice = AVSpeechSynthesisVoice(language: "id")
-                        self.synthesizer.speak(speechUtterance)
+                        self.sudahTahan = 1
                     }
                     else if(self.koordinatTextTerdekatX > self.koordinatTextTerdekatY && self.koordinatTextTerdekatX > 50)
                     {
@@ -237,12 +244,14 @@ class CameraViewController: UIViewController {
                             let speechUtterance = AVSpeechUtterance(string: "Kiri")
                             speechUtterance.voice = AVSpeechSynthesisVoice(language: "id")
                             self.synthesizer.speak(speechUtterance)
+                            self.sudahTahan = 1
                         }
                         else if(self.kanan == true)
                         {
                             let speechUtterance = AVSpeechUtterance(string: "Kanan")
                             speechUtterance.voice = AVSpeechSynthesisVoice(language: "id")
                             self.synthesizer.speak(speechUtterance)
+                            self.sudahTahan = 1
                         }
                     }
                     else if(self.koordinatTextTerdekatY > 50)
@@ -252,15 +261,18 @@ class CameraViewController: UIViewController {
                             let speechUtterance = AVSpeechUtterance(string: "Atas")
                             speechUtterance.voice = AVSpeechSynthesisVoice(language: "id")
                             self.synthesizer.speak(speechUtterance)
+                            self.sudahTahan = 1
                         }
                         else if(self.bawah == true)
                         {
                             let speechUtterance = AVSpeechUtterance(string: "Bawah")
                             speechUtterance.voice = AVSpeechSynthesisVoice(language: "id")
                             self.synthesizer.speak(speechUtterance)
+                            self.sudahTahan = 1
                         }
                     }
-                    if(self.koordinatTextTerdekatX < 50 && self.koordinatTextTerdekatY < 50 && self.recognizedTextSize > 5 && self.recognizedTextSize < 26)
+                    
+                    if(self.koordinatTextTerdekatX < 50 && self.koordinatTextTerdekatY < 50 && self.spokenTextSize >= 5)
                     {
                         self.posisiSudahPas = true
                         if(self.sudahTahan == 1)
@@ -271,38 +283,29 @@ class CameraViewController: UIViewController {
                             self.synthesizer.speak(speechUtterance)
                             self.sudahTahan += 1
                         }
-                        print("Posisi sudah pas")
+                        //print("Posisi sudah pas")
                     }
                     else
                     {
                         self.posisiSudahPas = false
                         self.sudahTahan = 1
-                        print("Belum pas")
+                        //print("Belum pas")
                     }
                     if(self.posisiSudahPas == true)
                     {
-                        if(self.spokenText != self.recognizedText && self.recognizedText != "")
-                        {
-                            self.spokenText = self.recognizedText
-                            if(self.counter >= 7)
-                            {
-                                self.counter -= 3
-                            }
-                            else
-                            {
-                                self.counter = 0
-                            }
-                        }
                         self.avgConfidence = self.totalConfidence/self.observationCounter
-                        if(self.spokenText == self.recognizedText)
+                        if(self.avgConfidence >= 0.43)
                         {
-                            self.counter += 5
-                            print(self.spokenText, self.recognizedText, self.counter)
+                            self.counter+=5
                         }
-                        if(self.avgConfidence >= 0.5 && self.counter > 30)
+                        else
+                        {
+                            self.counter = 0
+                        }
+                        if(self.avgConfidence >= 0.43 && self.counter > 20)
                         {
                             self.synthesizer.stopSpeaking(at: .immediate)
-                            let speechUtterance = AVSpeechUtterance(string: "\(self.spokenText)")
+                            let speechUtterance = AVSpeechUtterance(string: "\(self.recognizedText)")
                             speechUtterance.voice = AVSpeechSynthesisVoice(language: "id")
                             self.synthesizer.speak(speechUtterance)
                             self.counter = 0
