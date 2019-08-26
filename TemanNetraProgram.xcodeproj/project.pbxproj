@@ -7,8 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		083215B6230D792E003EBF2A /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083215B5230D792E003EBF2A /* TableViewController.swift */; };
-		083215B8230D8B36003EBF2A /* NotesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 083215B7230D8B36003EBF2A /* NotesViewController.swift */; };
+		D27CC20A23139FFC0071452E /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27CC20923139FFC0071452E /* DetailViewController.swift */; };
+		D2D977732312FD3C009BDFE6 /* ArsipCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D977722312FD3C009BDFE6 /* ArsipCell.swift */; };
+		D2D977752312FDD4009BDFE6 /* ArsipViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D977742312FDD4009BDFE6 /* ArsipViewController.swift */; };
 		D328F727230C340300511884 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D328F726230C340300511884 /* AppDelegate.swift */; };
 		D328F729230C340300511884 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D328F728230C340300511884 /* ViewController.swift */; };
 		D328F72C230C340300511884 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D328F72A230C340300511884 /* Main.storyboard */; };
@@ -21,8 +22,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		083215B5230D792E003EBF2A /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
-		083215B7230D8B36003EBF2A /* NotesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesViewController.swift; sourceTree = "<group>"; };
+		D27CC20923139FFC0071452E /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		D2D977722312FD3C009BDFE6 /* ArsipCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArsipCell.swift; sourceTree = "<group>"; };
+		D2D977742312FDD4009BDFE6 /* ArsipViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArsipViewController.swift; sourceTree = "<group>"; };
 		D328F723230C340300511884 /* TemanNetraProgram.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TemanNetraProgram.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D328F726230C340300511884 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D328F728230C340300511884 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -71,9 +73,10 @@
 				D328F73F230C42CF00511884 /* CameraViewController.swift */,
 				D328F73D230C3D2400511884 /* OnBoardingViewController.swift */,
 				D328F72A230C340300511884 /* Main.storyboard */,
+				D2D977742312FDD4009BDFE6 /* ArsipViewController.swift */,
+				D27CC20923139FFC0071452E /* DetailViewController.swift */,
+				D2D977722312FD3C009BDFE6 /* ArsipCell.swift */,
 				D3540F3A230EB770009A7439 /* Preview.swift */,
-				083215B5230D792E003EBF2A /* TableViewController.swift */,
-				083215B7230D8B36003EBF2A /* NotesViewController.swift */,
 				D328F730230C340400511884 /* Assets.xcassets */,
 				D328F732230C340400511884 /* LaunchScreen.storyboard */,
 				D328F735230C340400511884 /* Info.plist */,
@@ -153,12 +156,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D27CC20A23139FFC0071452E /* DetailViewController.swift in Sources */,
 				D328F72F230C340300511884 /* TemanNetraProgram.xcdatamodeld in Sources */,
-				083215B6230D792E003EBF2A /* TableViewController.swift in Sources */,
 				D3540F3B230EB770009A7439 /* Preview.swift in Sources */,
+				D2D977752312FDD4009BDFE6 /* ArsipViewController.swift in Sources */,
 				D328F740230C42CF00511884 /* CameraViewController.swift in Sources */,
-				083215B8230D8B36003EBF2A /* NotesViewController.swift in Sources */,
 				D328F729230C340300511884 /* ViewController.swift in Sources */,
+				D2D977732312FD3C009BDFE6 /* ArsipCell.swift in Sources */,
 				D328F727230C340300511884 /* AppDelegate.swift in Sources */,
 				D328F73E230C3D2400511884 /* OnBoardingViewController.swift in Sources */,
 			);

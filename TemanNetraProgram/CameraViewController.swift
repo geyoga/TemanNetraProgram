@@ -62,9 +62,6 @@ class CameraViewController: UIViewController {
         
         self.view.addGestureRecognizer(leftSwipe)
         
-        let tap = UITapGestureRecognizer(target: self, action: #selector(doubleTapped))
-        tap.numberOfTapsRequired  = 2
-        self.imageView.addGestureRecognizer(tap)
         //startTextDetection()
         // Do any additional setup after loading the view.
         if voiceOverCondition == true {
@@ -74,6 +71,9 @@ class CameraViewController: UIViewController {
             print("voice over mati")
         }
         
+        let tap = UITapGestureRecognizer(target: self, action: #selector(doubleTapped))
+        tap.numberOfTapsRequired = 2
+        view.addGestureRecognizer(tap)
         
         //double  tap
 //        let tap = UITapGestureRecognizer(target: self, action: #selector(doubleTapped))
@@ -91,6 +91,12 @@ class CameraViewController: UIViewController {
             }
         }
     
+    @IBAction func panduanButtonTapped(_ sender: Any) {
+        self.synthesizer.stopSpeaking(at: .immediate)
+        let speechUtterance = AVSpeechUtterance(string: "Arahkan kamera ke media cetak yang ingin anda baca. Ikuti arahan untuk memastikan tulisan tersebut dapat dibaca oleh aplikasi. Guncangkan ponsel untuk berhenti membaca dan memindai ulang tulisan. Ketuk layar ponsel dua kali untuk menyimpan tulisan ke dalam arsip. Buka arsip untuk membaca ulang catatan yang telah anda simpan.")
+        speechUtterance.voice = AVSpeechSynthesisVoice(language: "id")
+        self.synthesizer.speak(speechUtterance)
+    }
     @IBAction func buttonAlertSave(_ sender: Any) {
         
         let alert = UIAlertController(title: "Judul Catatan", message: "Berikan judul untuk menyimpan catatan ini ke dalam Arsip", preferredStyle: UIAlertController.Style.alert)
@@ -232,6 +238,7 @@ class CameraViewController: UIViewController {
                     //print("Ukuran text: ", self.spokenTextSize, self.spokenText)
                     if(self.spokenTextSize < 5)
                     {
+                        
                         let speechUtterance = AVSpeechUtterance(string: "Mendekat")
                         speechUtterance.voice = AVSpeechSynthesisVoice(language: "id")
                         self.synthesizer.speak(speechUtterance)
@@ -304,12 +311,14 @@ class CameraViewController: UIViewController {
                         }
                         if(self.avgConfidence >= 0.43 && self.counter > 20)
                         {
+                            self.recognizedText.removeLast()
                             self.synthesizer.stopSpeaking(at: .immediate)
                             let speechUtterance = AVSpeechUtterance(string: "\(self.recognizedText)")
                             speechUtterance.voice = AVSpeechSynthesisVoice(language: "id")
                             self.synthesizer.speak(speechUtterance)
                             self.counter = 0
                             self.sudahTahan = 1
+                            self.spokenText = self.recognizedText
                             print(self.recognizedText,self.avgConfidence)
                         }
                     }
@@ -381,12 +390,16 @@ extension CameraViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
                 
     }
     
+    
+    
     @objc func doubleTapped() {
         
         let alert = UIAlertController(title: "Judul Catatan", message: "Berikan judul untuk menyimpan catatan ini ke dalam Arsip", preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: "Simpan", style: .default, handler: { action in
             if let catatan  = alert.textFields?.first?.text {
-                print("ok")
+                print("Judulnya: ", catatan)
+                self.saveData(judul: catatan, isi: self.spokenText)
+                //saveData(alert.textFields)
             }
         }))
         alert.addTextField(configurationHandler: { textField in
@@ -395,7 +408,30 @@ extension CameraViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
         
         alert.addAction(UIAlertAction(title: "Batal", style:  .cancel, handler: nil))
         self.present(alert, animated: true)
+        
+        
+        
     }
+    
+    
+    func saveData(judul: String, isi: String){
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        guard let managedContext = appDelegate?.persistentContainer.viewContext else { return }
+        let note = Note(context: managedContext)
+        
+        note.judulNotes = judul
+        note.isiNotes = isi
+        note.timestampNotes = 26082019
+        
+        do {
+            try managedContext.save()
+            print("Berhasil menyimpan")
+        } catch  {
+            print("Gagal menyimpan")
+        }
+    }
+    
+    
     
     
 }
