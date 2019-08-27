@@ -421,7 +421,7 @@ extension CameraViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
         
         note.judulNotes = judul
         note.isiNotes = isi
-        note.timestampNotes = 26082019
+        note.timestampNotes = 27082019
         
         do {
             try managedContext.save()
