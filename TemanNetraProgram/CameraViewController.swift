@@ -148,7 +148,7 @@ class CameraViewController: UIViewController {
         return  imageView as! CameraView
     }
     
-    
+    //hello//
     
     func startTextRecognition(){
             let textRequest = VNRecognizeTextRequest(completionHandler: self.recognizeTextHandler)
