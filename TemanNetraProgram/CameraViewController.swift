@@ -159,7 +159,7 @@ class CameraViewController: UIViewController {
         }
         
         func recognizeTextHandler(request: VNRequest, error: Error?){
-            if(synthesizer.isSpeaking == false)
+            if(synthesizer.isSpeaking == false && voiceOverCondition == false)
             {
                 guard let observations = request.results as? [VNRecognizedTextObservation] else {print("no result"); return}
                 DispatchQueue.main.async()
