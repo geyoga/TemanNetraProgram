@@ -56,11 +56,11 @@ class CameraViewController: UIViewController {
         //print("TitikY: ", titikTengahDeviceY)
         
         //func segue swipe
-        let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(swipeAction(swipe:)))
+//        let leftSwipe = UISwipeGestureRecognizer(target: self, action: #selector(swipeAction(swipe:)))
         
-        leftSwipe.direction = UISwipeGestureRecognizer.Direction.left
+       // leftSwipe.direction = UISwipeGestureRecognizer.Direction.left
         
-        self.view.addGestureRecognizer(leftSwipe)
+       // self.view.addGestureRecognizer(leftSwipe)
         
         //startTextDetection()
         // Do any additional setup after loading the view.

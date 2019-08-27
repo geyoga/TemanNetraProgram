@@ -66,9 +66,9 @@
         <!--Navigation Controller-->
         <scene sceneID="dEj-VV-68h">
             <objects>
-                <navigationController id="Sdv-Pb-KDL" sceneMemberID="viewController">
+                <navigationController modalPresentationStyle="fullScreen" id="Sdv-Pb-KDL" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="R6N-cD-1vJ">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -82,7 +82,7 @@
         <!--Camera View Controller-->
         <scene sceneID="mkf-lH-rO7">
             <objects>
-                <viewController id="b3q-yk-uX7" customClass="CameraViewController" customModule="TemanNetraProgram" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="b3q-yk-uX7" customClass="CameraViewController" customModule="TemanNetraProgram" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ban-uw-lk8">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -149,7 +149,7 @@
         <!--Arsip View Controller-->
         <scene sceneID="APK-BV-pQk">
             <objects>
-                <viewController id="AZv-rH-3i0" customClass="ArsipViewController" customModule="TemanNetraProgram" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="AZv-rH-3i0" customClass="ArsipViewController" customModule="TemanNetraProgram" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="hih-DZ-Lzv">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -227,7 +227,7 @@
         <!--Detail View Controller-->
         <scene sceneID="er2-7d-cdd">
             <objects>
-                <viewController id="h5x-W9-CFr" customClass="DetailViewController" customModule="TemanNetraProgram" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="h5x-W9-CFr" customClass="DetailViewController" customModule="TemanNetraProgram" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="VeM-W6-kJH">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -335,7 +335,7 @@
         <!--View Controller-->
         <scene sceneID="zgZ-Bf-gsZ">
             <objects>
-                <viewController storyboardIdentifier="OnBoardFour" id="M58-Mf-GPS" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="OnBoardFour" modalPresentationStyle="fullScreen" id="M58-Mf-GPS" sceneMemberID="viewController">
                     <view key="view" clipsSubviews="YES" contentMode="scaleToFill" id="IVO-Jg-FAd">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
