@@ -75,6 +75,9 @@
                                         <integer key="value" value="10"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <segue destination="dPg-WX-y10" kind="show" id="9GM-gP-rmt"/>
+                                </connections>
                             </button>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Iphone Checklist" translatesAutoresizingMaskIntoConstraints="NO" id="gjl-lf-0gx">
                                 <rect key="frame" x="45" y="478" width="85" height="89"/>
@@ -95,7 +98,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="qXb-9J-iWz"/>
                     </view>
                 </viewController>
@@ -106,7 +109,7 @@
         <!--View Controller-->
         <scene sceneID="eMb-44-vhZ">
             <objects>
-                <viewController id="dPg-WX-y10" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="fullScreen" id="dPg-WX-y10" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="sZX-fF-rq3">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -135,6 +138,9 @@
                                         <integer key="value" value="10"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <segue destination="Sdv-Pb-KDL" kind="show" id="dzP-E2-b9C"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Buka arsip untuk membaca ulang catatan yang telah anda simpan." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bxe-Ix-XwX">
                                 <rect key="frame" x="50" y="437" width="314" height="58"/>
@@ -179,18 +185,20 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="fM9-dF-bsV"/>
                     </view>
+                    <navigationItem key="navigationItem" id="Ddi-BO-Idw"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Kyo-N1-RwS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-884.05797101449286" y="1329.9107142857142"/>
+            <point key="canvasLocation" x="-859" y="1334"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="dEj-VV-68h">
             <objects>
                 <navigationController modalPresentationStyle="fullScreen" id="Sdv-Pb-KDL" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="AFA-Ah-b3g"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="R6N-cD-1vJ">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -208,56 +216,45 @@
             <objects>
                 <viewController modalPresentationStyle="fullScreen" id="b3q-yk-uX7" customClass="CameraViewController" customModule="TemanNetraProgram" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ban-uw-lk8">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y2d-M5-Q7c">
-                                <rect key="frame" x="364" y="98" width="30" height="46"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="46" id="UHd-VB-Z2r"/>
-                                </constraints>
-                                <state key="normal" image="Arsip"/>
-                                <connections>
-                                    <segue destination="AZv-rH-3i0" kind="show" id="Szn-JN-J1z"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qrc-Gl-0Xr">
-                                <rect key="frame" x="20" y="96" width="46" height="48"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Pfn-Tr-aJW" customClass="CameraView" customModule="TemanNetraProgram" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="88" width="414" height="710"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <accessibility key="accessibilityConfiguration" label="Camera">
+                                    <accessibilityTraits key="traits" button="YES" image="YES"/>
+                                    <bool key="isElement" value="NO"/>
+                                </accessibility>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qrc-Gl-0Xr">
+                                <rect key="frame" x="20" y="814" width="46" height="48"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <accessibility key="accessibilityConfiguration" label="Panduan"/>
                                 <state key="normal" image="Panduan"/>
                                 <connections>
                                     <action selector="panduanButtonTapped:" destination="b3q-yk-uX7" eventType="touchUpInside" id="ycI-4i-vd8"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MaD-ev-ab9">
-                                <rect key="frame" x="0.0" y="164" width="414" height="718"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MaD-ev-ab9">
+                                <rect key="frame" x="0.0" y="88" width="414" height="710"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <accessibility key="accessibilityConfiguration" label="Kamera"/>
                                 <connections>
                                     <action selector="buttonAlertSave:" destination="b3q-yk-uX7" eventType="touchUpInside" id="KHp-GM-hh6"/>
                                 </connections>
                             </button>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Pfn-Tr-aJW" customClass="CameraView" customModule="TemanNetraProgram" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="152" width="414" height="756"/>
-                                <accessibility key="accessibilityConfiguration" label="Camera">
-                                    <accessibilityTraits key="traits" button="YES" image="YES"/>
-                                    <bool key="isElement" value="YES"/>
-                                </accessibility>
-                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y2d-M5-Q7c">
+                                <rect key="frame" x="364" y="814" width="30" height="46"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <accessibility key="accessibilityConfiguration" label="Arsip"/>
+                                <state key="normal" image="Arsip Symbol"/>
+                                <connections>
+                                    <segue destination="AZv-rH-3i0" kind="show" id="Szn-JN-J1z"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <constraints>
-                            <constraint firstItem="MaD-ev-ab9" firstAttribute="trailing" secondItem="B8K-mW-rpb" secondAttribute="trailing" id="EUk-ei-rFv"/>
-                            <constraint firstItem="MaD-ev-ab9" firstAttribute="top" secondItem="Y2d-M5-Q7c" secondAttribute="bottom" constant="20" id="Hzt-GQ-Pm2"/>
-                            <constraint firstItem="qrc-Gl-0Xr" firstAttribute="leading" secondItem="B8K-mW-rpb" secondAttribute="leading" constant="20" id="KQW-DF-lMd"/>
-                            <constraint firstItem="Pfn-Tr-aJW" firstAttribute="top" secondItem="Y2d-M5-Q7c" secondAttribute="bottom" constant="8" id="KS5-1g-fSR"/>
-                            <constraint firstItem="MaD-ev-ab9" firstAttribute="leading" secondItem="B8K-mW-rpb" secondAttribute="leading" id="RHo-ua-yJL"/>
-                            <constraint firstItem="qrc-Gl-0Xr" firstAttribute="top" secondItem="B8K-mW-rpb" secondAttribute="top" constant="8" id="TDe-UD-Rh8"/>
-                            <constraint firstItem="Pfn-Tr-aJW" firstAttribute="top" secondItem="qrc-Gl-0Xr" secondAttribute="bottom" constant="8" id="V3p-dN-sV8"/>
-                            <constraint firstAttribute="bottom" secondItem="MaD-ev-ab9" secondAttribute="bottom" constant="14" id="XxP-bD-naL"/>
-                            <constraint firstItem="Y2d-M5-Q7c" firstAttribute="top" secondItem="B8K-mW-rpb" secondAttribute="top" constant="10" id="ezU-CG-X4r"/>
-                            <constraint firstItem="Y2d-M5-Q7c" firstAttribute="trailing" secondItem="Ban-uw-lk8" secondAttribute="trailingMargin" id="rqM-nf-TgU"/>
-                            <constraint firstItem="Pfn-Tr-aJW" firstAttribute="leading" secondItem="B8K-mW-rpb" secondAttribute="leading" id="v8n-Nd-CX0"/>
-                            <constraint firstItem="Pfn-Tr-aJW" firstAttribute="trailing" secondItem="B8K-mW-rpb" secondAttribute="trailing" id="yhG-yi-9tj"/>
-                            <constraint firstAttribute="bottom" secondItem="Pfn-Tr-aJW" secondAttribute="bottom" constant="-12" id="z0Q-ul-Lh0"/>
-                        </constraints>
                         <viewLayoutGuide key="safeArea" id="B8K-mW-rpb"/>
                     </view>
                     <tabBarItem key="tabBarItem" systemItem="search" id="OQe-mL-lqT"/>
@@ -268,18 +265,18 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2HO-Ky-6mr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1202.8985507246377" y="1333.9285714285713"/>
+            <point key="canvasLocation" x="1203" y="1334"/>
         </scene>
         <!--Arsip View Controller-->
         <scene sceneID="APK-BV-pQk">
             <objects>
                 <viewController modalPresentationStyle="fullScreen" id="AZv-rH-3i0" customClass="ArsipViewController" customModule="TemanNetraProgram" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="hih-DZ-Lzv">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="LXX-VH-aqf">
-                                <rect key="frame" x="0.0" y="132" width="414" height="730"/>
+                                <rect key="frame" x="0.0" y="100" width="414" height="708"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ArsipCell" textLabel="GpH-uW-QoL" detailTextLabel="YwQ-6O-n9C" style="IBUITableViewCellStyleValue1" id="fW4-8H-Uqr" customClass="ArsipCell" customModule="TemanNetraProgram" customModuleProvider="target">
@@ -317,7 +314,7 @@
                                 </connections>
                             </tableView>
                             <searchBar contentMode="redraw" showsCancelButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Lmj-Nx-qcW">
-                                <rect key="frame" x="0.0" y="88" width="414" height="44"/>
+                                <rect key="frame" x="0.0" y="56" width="414" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="2SY-vk-FQz"/>
                                 </constraints>
@@ -339,6 +336,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="0gl-qe-iYS"/>
                     </view>
+                    <navigationItem key="navigationItem" id="9cm-A7-5Qq"/>
                     <connections>
                         <outlet property="arsipTableView" destination="LXX-VH-aqf" id="qfV-Jq-YDD"/>
                         <segue destination="h5x-W9-CFr" kind="show" identifier="ArsipToDetail" id="tmK-Uv-cXs"/>
@@ -353,7 +351,7 @@
             <objects>
                 <viewController modalPresentationStyle="fullScreen" id="h5x-W9-CFr" customClass="DetailViewController" customModule="TemanNetraProgram" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="VeM-W6-kJH">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TF1-bJ-AGq">
@@ -367,6 +365,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="Tyw-bk-5Mb"/>
                     </view>
+                    <navigationItem key="navigationItem" id="uJg-r2-sGh"/>
                     <connections>
                         <outlet property="detailLabel" destination="TF1-bJ-AGq" id="BDo-0L-7JW"/>
                     </connections>
@@ -375,49 +374,13 @@
             </objects>
             <point key="canvasLocation" x="3157.971014492754" y="1329.9107142857142"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="cN4-nL-WFW">
-            <objects>
-                <viewController id="W6Q-bm-cYi" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="ZkT-UV-XP2">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mnf-hs-cut" customClass="CameraView" customModule="TemanNetraProgram" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="44" width="414" height="734"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <accessibility key="accessibilityConfiguration" label="Camera">
-                                    <accessibilityTraits key="traits" button="YES" image="YES"/>
-                                    <bool key="isElement" value="YES"/>
-                                </accessibility>
-                            </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UOa-8l-2hn">
-                                <rect key="frame" x="344" y="798" width="50" height="48"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="folder.fill" catalog="system"/>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XMy-4t-mWT">
-                                <rect key="frame" x="20" y="798" width="46" height="48"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" image="Panduan"/>
-                            </button>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <viewLayoutGuide key="safeArea" id="1r0-DB-lis"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Vzc-RJ-8tD" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1202.8985507246377" y="630.80357142857144"/>
-        </scene>
     </scenes>
     <resources>
-        <image name="Arsip" width="30" height="46"/>
+        <image name="Arsip Symbol" width="30" height="46"/>
         <image name="Background1" width="414" height="896"/>
         <image name="Background2" width="414" height="896"/>
         <image name="Iphone Checklist" width="220" height="306"/>
         <image name="Panduan" width="46" height="48"/>
-        <image name="folder.fill" catalog="system" width="64" height="48"/>
         <image name="iphone Hand" width="62" height="82"/>
         <image name="iphone Hand Bubble" width="314" height="417"/>
     </resources>

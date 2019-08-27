@@ -116,9 +116,9 @@ extension ArsipViewController: UITableViewDataSource, UITableViewDelegate
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.synthesizer.stopSpeaking(at: .immediate)
-        let speechUtterance = AVSpeechUtterance(string: "\(isiNotes[indexPath.row])")
-        speechUtterance.voice = AVSpeechSynthesisVoice(language: "id")
-        self.synthesizer.speak(speechUtterance)
+//        let speechUtterance = AVSpeechUtterance(string: "\(isiNotes[indexPath.row])")
+//        speechUtterance.voice = AVSpeechSynthesisVoice(language: "id")
+//        self.synthesizer.speak(speechUtterance)
         performSegue(withIdentifier: "ArsipToDetail", sender: isiNotes[indexPath.row])
     }
 }

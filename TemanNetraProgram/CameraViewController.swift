@@ -88,6 +88,7 @@ class CameraViewController: UIViewController {
         override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
             if motion == .motionShake {
                 synthesizer.stopSpeaking(at: .immediate)
+                UIAccessibility.post(notification: .announcement, argument: "berhenti")
             }
         }
     
@@ -248,16 +249,18 @@ class CameraViewController: UIViewController {
                     {
                         if(self.kiri == true)
                         {
-                            let speechUtterance = AVSpeechUtterance(string: "Kiri")
-                            speechUtterance.voice = AVSpeechSynthesisVoice(language: "id")
-                            self.synthesizer.speak(speechUtterance)
+//                            let speechUtterance = AVSpeechUtterance(string: "Kiri")
+//                            speechUtterance.voice = AVSpeechSynthesisVoice(language: "id")
+//                            self.synthesizer.speak(speechUtterance)
+                            UIAccessibility.post(notification: .announcement, argument: "Kiri")
                             self.sudahTahan = 1
                         }
                         else if(self.kanan == true)
                         {
-                            let speechUtterance = AVSpeechUtterance(string: "Kanan")
-                            speechUtterance.voice = AVSpeechSynthesisVoice(language: "id")
-                            self.synthesizer.speak(speechUtterance)
+//                            let speechUtterance = AVSpeechUtterance(string: "Kanan")
+//                            speechUtterance.voice = AVSpeechSynthesisVoice(language: "id")
+//                            self.synthesizer.speak(speechUtterance)
+                            UIAccessibility.post(notification: .announcement, argument: "Kanan")
                             self.sudahTahan = 1
                         }
                     }
@@ -265,16 +268,18 @@ class CameraViewController: UIViewController {
                     {
                         if(self.atas == true)
                         {
-                            let speechUtterance = AVSpeechUtterance(string: "Atas")
-                            speechUtterance.voice = AVSpeechSynthesisVoice(language: "id")
-                            self.synthesizer.speak(speechUtterance)
+//                            let speechUtterance = AVSpeechUtterance(string: "Atas")
+//                            speechUtterance.voice = AVSpeechSynthesisVoice(language: "id")
+//                            self.synthesizer.speak(speechUtterance)
+                            UIAccessibility.post(notification: .announcement, argument: "Atas")
                             self.sudahTahan = 1
                         }
                         else if(self.bawah == true)
                         {
-                            let speechUtterance = AVSpeechUtterance(string: "Bawah")
-                            speechUtterance.voice = AVSpeechSynthesisVoice(language: "id")
-                            self.synthesizer.speak(speechUtterance)
+//                            let speechUtterance = AVSpeechUtterance(string: "Bawah")
+//                            speechUtterance.voice = AVSpeechSynthesisVoice(language: "id")
+//                            self.synthesizer.speak(speechUtterance)
+                            UIAccessibility.post(notification: .announcement, argument: "Bawah")
                             self.sudahTahan = 1
                         }
                     }
@@ -284,10 +289,11 @@ class CameraViewController: UIViewController {
                         self.posisiSudahPas = true
                         if(self.sudahTahan == 1)
                         {
-                            self.synthesizer.stopSpeaking(at: .immediate)
-                            let speechUtterance = AVSpeechUtterance(string: "Tahan")
-                            speechUtterance.voice = AVSpeechSynthesisVoice(language: "id")
-                            self.synthesizer.speak(speechUtterance)
+                              self.synthesizer.stopSpeaking(at: .immediate)
+//                            let speechUtterance = AVSpeechUtterance(string: "Tahan")
+//                            speechUtterance.voice = AVSpeechSynthesisVoice(language: "id")
+//                            self.synthesizer.speak(speechUtterance)
+                            UIAccessibility.post(notification: .announcement, argument: "Tahan")
                             self.sudahTahan += 1
                         }
                         //print("Posisi sudah pas")
@@ -313,9 +319,10 @@ class CameraViewController: UIViewController {
                         {
                             self.recognizedText.removeLast()
                             self.synthesizer.stopSpeaking(at: .immediate)
-                            let speechUtterance = AVSpeechUtterance(string: "\(self.recognizedText)")
-                            speechUtterance.voice = AVSpeechSynthesisVoice(language: "id")
-                            self.synthesizer.speak(speechUtterance)
+//                            let speechUtterance = AVSpeechUtterance(string: "\(self.recognizedText)")
+//                            speechUtterance.voice = AVSpeechSynthesisVoice(language: "id")
+//                            self.synthesizer.speak(speechUtterance)
+                            UIAccessibility.post(notification: .announcement, argument: self.recognizedText)
                             self.counter = 0
                             self.sudahTahan = 1
                             self.spokenText = self.recognizedText
