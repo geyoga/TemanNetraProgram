@@ -192,7 +192,7 @@ class CameraViewController: UIViewController {
                             self.kiri = true
                             self.kanan = false
                             self.spokenTextSize = self.recognizedTextSize
-                            self.spokenText = observation.topCandidates(1).first!.string
+                            //self.spokenText = observation.topCandidates(1).first!.string
                             //print("perlu ke kiri")
                         }
                         else if(self.titikTengahTextX > self.titikTengahDeviceX && self.titikTengahTextX - self.titikTengahDeviceX < self.koordinatTextTerdekatX)
@@ -201,7 +201,7 @@ class CameraViewController: UIViewController {
                             self.kiri = false
                             self.kanan = true
                             self.spokenTextSize = self.recognizedTextSize
-                            self.spokenText = observation.topCandidates(1).first!.string
+                            //self.spokenText = observation.topCandidates(1).first!.string
                             //print("perlu ke kanan")
                         }
                         
@@ -211,7 +211,7 @@ class CameraViewController: UIViewController {
                             self.atas = true
                             self.bawah = false
                             self.spokenTextSize = self.recognizedTextSize
-                            self.spokenText = observation.topCandidates(1).first!.string
+                            //self.spokenText = observation.topCandidates(1).first!.string
                             //print("perlu ke atas")
                         }
                         else if(self.titikTengahTextY > self.titikTengahDeviceY && self.titikTengahTextY - self.titikTengahDeviceY < self.koordinatTextTerdekatY)
@@ -220,7 +220,7 @@ class CameraViewController: UIViewController {
                             self.atas = false
                             self.bawah = true
                             self.spokenTextSize = self.recognizedTextSize
-                            self.spokenText = observation.topCandidates(1).first!.string
+                            //self.spokenText = observation.topCandidates(1).first!.string
                             //print("perlu ke bawah")
                         }
                         
