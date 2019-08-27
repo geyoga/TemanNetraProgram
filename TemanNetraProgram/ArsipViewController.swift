@@ -126,7 +126,8 @@ extension ArsipViewController: UITableViewDataSource, UITableViewDelegate
 extension ArsipViewController: UISearchBarDelegate{
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
 //        searchJudul = searchDictionary.filter({$0.key.lowercased().prefix(searchText.count) == searchText.lowercased()})
-        searchJudul = judulNotes.filter({$0.lowercased().prefix(searchText.count) == searchText.lowercased()})
+        searchJudul = judulNotes.filter({$0.lowercased().contains(searchText.lowercased())})
+//        searchJudul = judulNotes.filter({$0.lowercased().prefix(searchText.count) == searchText.lowercased()})
         searching = true
         arsipTableView.reloadData()
     }
