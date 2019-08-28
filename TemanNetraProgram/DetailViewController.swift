@@ -21,9 +21,9 @@ class DetailViewController: UIViewController {
         detailLabel.text = detailNote
         print("INI detail VIEW CONTROLLER")
         synthesizer.stopSpeaking(at: .immediate)
-        let speechUtterance = AVSpeechUtterance(string: detailNote!)
-        speechUtterance.voice = AVSpeechSynthesisVoice(language: "id")
-        synthesizer.speak(speechUtterance)
+//        let speechUtterance = AVSpeechUtterance(string: detailNote!)
+//        speechUtterance.voice = AVSpeechSynthesisVoice(language: "id")
+//        synthesizer.speak(speechUtterance)
         detailLabel.textColor = .black
     }
     

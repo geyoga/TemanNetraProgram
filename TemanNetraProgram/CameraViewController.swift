@@ -66,7 +66,7 @@ class CameraViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         print(imageView.frame.size)
-        
+        stopRecognition = true
         startLiveVideo()
         startTextRecognition()
         titikTengahDeviceX = Float(imageView.frame.width/2)
@@ -131,21 +131,7 @@ class CameraViewController: UIViewController {
         speechUtterance.voice = AVSpeechSynthesisVoice(language: "id")
         synthesizer.speak(speechUtterance)
     }
-    @IBAction func buttonAlertSave(_ sender: Any) {
-        
-        let alert = UIAlertController(title: "Judul Catatan", message: "Berikan judul untuk menyimpan catatan ini ke dalam Arsip", preferredStyle: UIAlertController.Style.alert)
-        alert.addAction(UIAlertAction(title: "Simpan", style: .default, handler: { action in
-            if let catatan  = alert.textFields?.first?.text {
-                print("ok")
-            }
-        }))
-        alert.addTextField(configurationHandler: { textField in
-            textField.placeholder = "Buat judul catatanmu"
-        })
-        
-        alert.addAction(UIAlertAction(title: "Batal", style:  .cancel, handler: nil))
-        self.present(alert, animated: true)
-    }
+    
     
         func startLiveVideo() {
             cameraView.session = session
@@ -442,10 +428,31 @@ extension CameraViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
                 
     }
     
-    
+    @IBAction func buttonAlertSave(_ sender: Any) {
+        
+        lagiSave = true
+        synthesizer.stopSpeaking(at: .immediate)
+        let alert = UIAlertController(title: "Judul Catatan", message: "Berikan judul untuk menyimpan catatan ini ke dalam Arsip", preferredStyle: UIAlertController.Style.alert)
+        alert.addAction(UIAlertAction(title: "Simpan", style: .default, handler: { action in
+            if let catatan  = alert.textFields?.first?.text {
+                print("ok")
+                self.saveData(judul: catatan, isi: self.spokenText)
+            }
+        }))
+        alert.addTextField(configurationHandler: { textField in
+            textField.placeholder = "Buat judul catatanmu"
+            self.lagiSave = true
+        })
+        
+        alert.addAction(UIAlertAction(title: "Batal", style: .cancel, handler: { action in
+            self.lagiSave = false
+        }))
+        self.present(alert, animated: true)
+    }
     
     @objc func doubleTapped() {
         lagiSave = true
+        synthesizer.stopSpeaking(at: .immediate)
         let alert = UIAlertController(title: "Judul Catatan", message: "Berikan judul untuk menyimpan catatan ini ke dalam Arsip", preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: "Simpan", style: .default, handler: { action in
             if let catatan  = alert.textFields?.first?.text {
@@ -456,6 +463,7 @@ extension CameraViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
         }))
         alert.addTextField(configurationHandler: { textField in
             textField.placeholder = "Buat judul catatanmu"
+            self.lagiSave = true
         })
 
         alert.addAction(UIAlertAction(title: "Batal", style: .cancel, handler: { action in
