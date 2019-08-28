@@ -355,7 +355,7 @@ class CameraViewController: UIViewController {
                             self.counter = 0
                             self.tidakYakin = 0
                             synthesizer.stopSpeaking(at: .immediate)
-                            let speechUtterance = AVSpeechUtterance(string: "Saya tidak bisa mengenali tulisan")
+                            let speechUtterance = AVSpeechUtterance(string: "Maaf, Saya tidak bisa mengenali tulisan ini")
                             speechUtterance.voice = AVSpeechSynthesisVoice(language: "id")
                             synthesizer.speak(speechUtterance)
                         }
