@@ -10,6 +10,7 @@ import UIKit
 import AVFoundation
 import AVKit
 import Vision
+import CoreMotion
 
 let synthesizer = AVSpeechSynthesizer()
 var stopRecognition = false
@@ -19,6 +20,8 @@ class CameraViewController: UIViewController {
     var counter = 0
     var cameraDevice: AVCaptureDevice?
     @IBOutlet weak var imageView: UIImageView!
+    
+    var motionManager = CMMotionManager()
     
     var session = AVCaptureSession()
     var tidakYakin = 0
@@ -69,6 +72,7 @@ class CameraViewController: UIViewController {
         stopRecognition = true
         startLiveVideo()
         startTextRecognition()
+        degreeDetection()
         titikTengahDeviceX = Float(imageView.frame.width/2)
         titikTengahDeviceY = Float(imageView.frame.height/2)
 //        NotificationCenter.default.addObserver(self, selector: #selector(self.announcementFinished(notification:)), name: UIAccessibility.announcementDidFinishNotification, object: nil)
@@ -99,6 +103,24 @@ class CameraViewController: UIViewController {
 //        let tap = UITapGestureRecognizer(target: self, action: #selector(doubleTapped))
 //        tap.numberOfTapsRequired  = 2
 //        self.imageView.addGestureRecognizer(tap)
+    }
+    
+    func degreeDetection() {
+        if motionManager.isDeviceMotionAvailable {
+            motionManager.deviceMotionUpdateInterval = 0.05
+            motionManager.startDeviceMotionUpdates(to: OperationQueue.current!) { (data, error) in
+                
+                let angle = self.degrees(radians: (data?.attitude.roll)!)
+                if angle > 100 || angle < -100 {
+                    synthesizer.stopSpeaking(at: .immediate)
+                    //print("omongan berhenti")
+                }
+            }
+        }
+    }
+    
+    func degrees(radians:Double) -> Double {
+        return 180 / .pi * radians
     }
     
 //    @objc private func announcementFinished(notification: Notification) {
