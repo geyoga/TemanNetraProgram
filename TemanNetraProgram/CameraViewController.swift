@@ -11,14 +11,17 @@ import AVFoundation
 import AVKit
 import Vision
 
+let synthesizer = AVSpeechSynthesizer()
+var stopRecognition = false
 
 class CameraViewController: UIViewController {
 
     var counter = 0
     var cameraDevice: AVCaptureDevice?
     @IBOutlet weak var imageView: UIImageView!
-    let synthesizer = AVSpeechSynthesizer()
+    
     var session = AVCaptureSession()
+    var tidakYakin = 0
     var requests = [VNRequest]()
     var spokenText: String = ""
     var titikTengahDeviceX: Float = 0
@@ -40,18 +43,35 @@ class CameraViewController: UIViewController {
     var sudahTahan = 1
     var spokenTextSize: Float = 0
     var voiceOverCondition = UIAccessibility.isVoiceOverRunning
+    var lagiSave = false
+//    var isAnnouncementFinished = true
+//    var isDelayed = true
     
     override func viewDidLayoutSubviews() {
         imageView.layer.sublayers?[0].frame = imageView.bounds
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        stopRecognition = false
+        print("INI camera VIEW CONTROLLER")
+        
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+        stopRecognition = true
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         print(imageView.frame.size)
+        
         startLiveVideo()
         startTextRecognition()
         titikTengahDeviceX = Float(imageView.frame.width/2)
         titikTengahDeviceY = Float(imageView.frame.height/2)
+//        NotificationCenter.default.addObserver(self, selector: #selector(self.announcementFinished(notification:)), name: UIAccessibility.announcementDidFinishNotification, object: nil)
         //print("TitikX: ", titikTengahDeviceX)
         //print("TitikY: ", titikTengahDeviceY)
         
@@ -81,6 +101,19 @@ class CameraViewController: UIViewController {
 //        self.imageView.addGestureRecognizer(tap)
     }
     
+//    @objc private func announcementFinished(notification: Notification) {
+//        print("announcement selesai")
+//        let announcementIsFinished = notification.userInfo?.values.reversed().first
+//        if announcementIsFinished as? Int == 1
+//        {
+//            isAnnouncementFinished = true
+//        }
+//        else
+//        {
+//            isAnnouncementFinished = false
+//        }
+//    }
+    
         override func becomeFirstResponder() -> Bool {
             return true
         }
@@ -88,15 +121,15 @@ class CameraViewController: UIViewController {
         override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
             if motion == .motionShake {
                 synthesizer.stopSpeaking(at: .immediate)
-                UIAccessibility.post(notification: .announcement, argument: "berhenti")
+                //UIAccessibility.post(notification: .announcement, argument: "berhenti")
             }
         }
     
     @IBAction func panduanButtonTapped(_ sender: Any) {
-        self.synthesizer.stopSpeaking(at: .immediate)
+        synthesizer.stopSpeaking(at: .immediate)
         let speechUtterance = AVSpeechUtterance(string: "Arahkan kamera ke media cetak yang ingin anda baca. Ikuti arahan untuk memastikan tulisan tersebut dapat dibaca oleh aplikasi. Guncangkan ponsel untuk berhenti membaca dan memindai ulang tulisan. Ketuk layar ponsel dua kali untuk menyimpan tulisan ke dalam arsip. Buka arsip untuk membaca ulang catatan yang telah anda simpan.")
         speechUtterance.voice = AVSpeechSynthesisVoice(language: "id")
-        self.synthesizer.speak(speechUtterance)
+        synthesizer.speak(speechUtterance)
     }
     @IBAction func buttonAlertSave(_ sender: Any) {
         
@@ -149,8 +182,6 @@ class CameraViewController: UIViewController {
         return  imageView as! CameraView
     }
     
-    
-    
     func startTextRecognition(){
             let textRequest = VNRecognizeTextRequest(completionHandler: self.recognizeTextHandler)
             textRequest.usesLanguageCorrection = false
@@ -159,11 +190,13 @@ class CameraViewController: UIViewController {
         }
         
         func recognizeTextHandler(request: VNRequest, error: Error?){
-            if(synthesizer.isSpeaking == false && voiceOverCondition == false)
+            if(synthesizer.isSpeaking == false && stopRecognition == false && lagiSave == false)
             {
                 guard let observations = request.results as? [VNRecognizedTextObservation] else {print("no result"); return}
+
                 DispatchQueue.main.async()
                 {
+                    //self.isAnnouncementFinished = false
                     self.avgConfidence = 0
                     self.totalConfidence = 0
                     self.observationCounter = 0
@@ -242,25 +275,27 @@ class CameraViewController: UIViewController {
                         
                         let speechUtterance = AVSpeechUtterance(string: "Mendekat")
                         speechUtterance.voice = AVSpeechSynthesisVoice(language: "id")
-                        self.synthesizer.speak(speechUtterance)
+                        synthesizer.speak(speechUtterance)
+//                        UIAccessibility.post(notification: .announcement, argument: "Mendekat")
                         self.sudahTahan = 1
                     }
                     else if(self.koordinatTextTerdekatX > self.koordinatTextTerdekatY && self.koordinatTextTerdekatX > 50)
                     {
                         if(self.kiri == true)
                         {
-//                            let speechUtterance = AVSpeechUtterance(string: "Kiri")
-//                            speechUtterance.voice = AVSpeechSynthesisVoice(language: "id")
-//                            self.synthesizer.speak(speechUtterance)
-                            UIAccessibility.post(notification: .announcement, argument: "Kiri")
+                            let speechUtterance = AVSpeechUtterance(string: "Kiri")
+                            speechUtterance.voice = AVSpeechSynthesisVoice(language: "id")
+                            synthesizer.speak(speechUtterance)
+//                            UIAccessibility.post(notification: .announcement, argument: "Kiri")
                             self.sudahTahan = 1
                         }
                         else if(self.kanan == true)
                         {
-//                            let speechUtterance = AVSpeechUtterance(string: "Kanan")
-//                            speechUtterance.voice = AVSpeechSynthesisVoice(language: "id")
-//                            self.synthesizer.speak(speechUtterance)
-                            UIAccessibility.post(notification: .announcement, argument: "Kanan")
+                            let speechUtterance = AVSpeechUtterance(string: "Kanan")
+                            speechUtterance.voice = AVSpeechSynthesisVoice(language: "id")
+                            synthesizer.speak(speechUtterance)
+//                            UIAccessibility.post(notification: .announcement, argument: "Kanan")
+                            
                             self.sudahTahan = 1
                         }
                     }
@@ -268,18 +303,18 @@ class CameraViewController: UIViewController {
                     {
                         if(self.atas == true)
                         {
-//                            let speechUtterance = AVSpeechUtterance(string: "Atas")
-//                            speechUtterance.voice = AVSpeechSynthesisVoice(language: "id")
-//                            self.synthesizer.speak(speechUtterance)
-                            UIAccessibility.post(notification: .announcement, argument: "Atas")
+                            let speechUtterance = AVSpeechUtterance(string: "Atas")
+                            speechUtterance.voice = AVSpeechSynthesisVoice(language: "id")
+                            synthesizer.speak(speechUtterance)
+//                            UIAccessibility.post(notification: .announcement, argument: "Atas")
                             self.sudahTahan = 1
                         }
                         else if(self.bawah == true)
                         {
-//                            let speechUtterance = AVSpeechUtterance(string: "Bawah")
-//                            speechUtterance.voice = AVSpeechSynthesisVoice(language: "id")
-//                            self.synthesizer.speak(speechUtterance)
-                            UIAccessibility.post(notification: .announcement, argument: "Bawah")
+                            let speechUtterance = AVSpeechUtterance(string: "Bawah")
+                            speechUtterance.voice = AVSpeechSynthesisVoice(language: "id")
+                            synthesizer.speak(speechUtterance)
+//                            UIAccessibility.post(notification: .announcement, argument: "Bawah")
                             self.sudahTahan = 1
                         }
                     }
@@ -287,15 +322,15 @@ class CameraViewController: UIViewController {
                     if(self.koordinatTextTerdekatX < 50 && self.koordinatTextTerdekatY < 50 && self.spokenTextSize >= 5)
                     {
                         self.posisiSudahPas = true
-                        if(self.sudahTahan == 1)
-                        {
-                              self.synthesizer.stopSpeaking(at: .immediate)
-//                            let speechUtterance = AVSpeechUtterance(string: "Tahan")
-//                            speechUtterance.voice = AVSpeechSynthesisVoice(language: "id")
-//                            self.synthesizer.speak(speechUtterance)
-                            UIAccessibility.post(notification: .announcement, argument: "Tahan")
+//                        if(self.sudahTahan == 1)
+//                        {
+                              synthesizer.stopSpeaking(at: .immediate)
+                            let speechUtterance = AVSpeechUtterance(string: "Tahan")
+                            speechUtterance.voice = AVSpeechSynthesisVoice(language: "id")
+                            synthesizer.speak(speechUtterance)
+//                            UIAccessibility.post(notification: .announcement, argument: "Tahan")
                             self.sudahTahan += 1
-                        }
+                        //}
                         //print("Posisi sudah pas")
                     }
                     else
@@ -307,26 +342,36 @@ class CameraViewController: UIViewController {
                     if(self.posisiSudahPas == true)
                     {
                         self.avgConfidence = self.totalConfidence/self.observationCounter
-                        if(self.avgConfidence >= 0.43)
+                        if(self.avgConfidence >= 0.40)
                         {
                             self.counter+=5
                         }
                         else
                         {
-                            self.counter = 0
+                            self.tidakYakin += 5
                         }
-                        if(self.avgConfidence >= 0.43 && self.counter > 20)
+                        if(self.avgConfidence >= 0.40 && self.counter > 20)
                         {
                             self.recognizedText.removeLast()
-                            self.synthesizer.stopSpeaking(at: .immediate)
-//                            let speechUtterance = AVSpeechUtterance(string: "\(self.recognizedText)")
-//                            speechUtterance.voice = AVSpeechSynthesisVoice(language: "id")
-//                            self.synthesizer.speak(speechUtterance)
-                            UIAccessibility.post(notification: .announcement, argument: self.recognizedText)
+                            synthesizer.stopSpeaking(at: .immediate)
+                            let speechUtterance = AVSpeechUtterance(string: "\(self.recognizedText)")
+                            speechUtterance.voice = AVSpeechSynthesisVoice(language: "id")
+                            synthesizer.speak(speechUtterance)
+//                            UIAccessibility.post(notification: .announcement, argument: self.recognizedText)
                             self.counter = 0
+                            self.tidakYakin = 0
                             self.sudahTahan = 1
                             self.spokenText = self.recognizedText
                             print(self.recognizedText,self.avgConfidence)
+                        }
+                        else if(self.tidakYakin >= 25)
+                        {
+                            self.counter = 0
+                            self.tidakYakin = 0
+                            synthesizer.stopSpeaking(at: .immediate)
+                            let speechUtterance = AVSpeechUtterance(string: "Saya tidak bisa mengenali tulisan")
+                            speechUtterance.voice = AVSpeechSynthesisVoice(language: "id")
+                            synthesizer.speak(speechUtterance)
                         }
                     }
                 }
@@ -400,7 +445,7 @@ extension CameraViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
     
     
     @objc func doubleTapped() {
-        
+        lagiSave = true
         let alert = UIAlertController(title: "Judul Catatan", message: "Berikan judul untuk menyimpan catatan ini ke dalam Arsip", preferredStyle: UIAlertController.Style.alert)
         alert.addAction(UIAlertAction(title: "Simpan", style: .default, handler: { action in
             if let catatan  = alert.textFields?.first?.text {
@@ -412,8 +457,10 @@ extension CameraViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
         alert.addTextField(configurationHandler: { textField in
             textField.placeholder = "Buat judul catatanmu"
         })
-        
-        alert.addAction(UIAlertAction(title: "Batal", style:  .cancel, handler: nil))
+
+        alert.addAction(UIAlertAction(title: "Batal", style: .cancel, handler: { action in
+            self.lagiSave = false
+        }))
         self.present(alert, animated: true)
         
         
@@ -433,6 +480,7 @@ extension CameraViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
         do {
             try managedContext.save()
             print("Berhasil menyimpan")
+            self.lagiSave = false
         } catch  {
             print("Gagal menyimpan")
         }

@@ -9,13 +9,14 @@
 import UIKit
 import AVFoundation
 
+
+
 class ArsipViewController: UIViewController {
 
     var judulNotes: [String] = []
     var isiNotes: [String] = []
     var timestampNotes: [Int] = []
     var tableRowCounter = 0
-    let synthesizer = AVSpeechSynthesizer()
     
     @IBOutlet weak var arsipTableView: UITableView!
     //var searchDictionary: [String: [Int: String]] = [:]
@@ -28,8 +29,8 @@ class ArsipViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        synthesizer.stopSpeaking(at: .immediate)
         fetchData()
-        
     }
     
     override func becomeFirstResponder() -> Bool {
@@ -115,10 +116,6 @@ extension ArsipViewController: UITableViewDataSource, UITableViewDelegate
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.synthesizer.stopSpeaking(at: .immediate)
-//        let speechUtterance = AVSpeechUtterance(string: "\(isiNotes[indexPath.row])")
-//        speechUtterance.voice = AVSpeechSynthesisVoice(language: "id")
-//        self.synthesizer.speak(speechUtterance)
         performSegue(withIdentifier: "ArsipToDetail", sender: isiNotes[indexPath.row])
     }
 }

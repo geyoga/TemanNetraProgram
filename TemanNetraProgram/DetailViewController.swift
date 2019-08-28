@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class DetailViewController: UIViewController {
 
@@ -18,8 +19,22 @@ class DetailViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         detailLabel.text = detailNote
+        print("INI detail VIEW CONTROLLER")
+        synthesizer.stopSpeaking(at: .immediate)
+        let speechUtterance = AVSpeechUtterance(string: detailNote!)
+        speechUtterance.voice = AVSpeechSynthesisVoice(language: "id")
+        synthesizer.speak(speechUtterance)
+        detailLabel.textColor = .black
     }
     
-
+    override func becomeFirstResponder() -> Bool {
+        return true
+    }
+    
+    override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
+        if motion == .motionShake {
+            synthesizer.stopSpeaking(at: .immediate)
+        }
+    }
 
 }
