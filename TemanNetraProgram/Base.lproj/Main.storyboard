@@ -231,6 +231,14 @@
                                     <bool key="isElement" value="NO"/>
                                 </accessibility>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MaD-ev-ab9">
+                                <rect key="frame" x="0.0" y="88" width="414" height="710"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <accessibility key="accessibilityConfiguration" label="Kamera"/>
+                                <connections>
+                                    <action selector="buttonAlertSave:" destination="b3q-yk-uX7" eventType="touchUpInside" id="KHp-GM-hh6"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qrc-Gl-0Xr">
                                 <rect key="frame" x="20" y="814" width="46" height="48"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -238,14 +246,6 @@
                                 <state key="normal" image="Panduan"/>
                                 <connections>
                                     <action selector="panduanButtonTapped:" destination="b3q-yk-uX7" eventType="touchUpInside" id="ycI-4i-vd8"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MaD-ev-ab9">
-                                <rect key="frame" x="0.0" y="88" width="414" height="710"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <accessibility key="accessibilityConfiguration" label="Kamera"/>
-                                <connections>
-                                    <action selector="buttonAlertSave:" destination="b3q-yk-uX7" eventType="touchUpInside" id="KHp-GM-hh6"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y2d-M5-Q7c">
@@ -264,6 +264,7 @@
                     <tabBarItem key="tabBarItem" systemItem="search" id="OQe-mL-lqT"/>
                     <navigationItem key="navigationItem" id="8DV-oY-xD4"/>
                     <connections>
+                        <outlet property="buttonCapture" destination="MaD-ev-ab9" id="dQc-sA-piH"/>
                         <outlet property="imageView" destination="Pfn-Tr-aJW" id="Xjv-id-l5d"/>
                     </connections>
                 </viewController>

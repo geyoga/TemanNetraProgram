@@ -20,6 +20,7 @@ class CameraViewController: UIViewController {
     var counter = 0
     var cameraDevice: AVCaptureDevice?
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var buttonCapture: UIButton!
     
     var motionManager = CMMotionManager()
     
@@ -56,6 +57,13 @@ class CameraViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        if voiceOverCondition == true {
+            print("voice over nyala")
+        }
+        else {
+            buttonCapture.removeFromSuperview()
+            print("voice over mati")
+        }
         stopRecognition = false
         print("INI camera VIEW CONTROLLER")
         
@@ -88,12 +96,7 @@ class CameraViewController: UIViewController {
         
         //startTextDetection()
         // Do any additional setup after loading the view.
-        if voiceOverCondition == true {
-            print("voice over nyala")
-        }
-        else {
-            print("voice over mati")
-        }
+        
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(doubleTapped))
         tap.numberOfTapsRequired = 2
