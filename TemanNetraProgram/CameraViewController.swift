@@ -111,7 +111,7 @@ class CameraViewController: UIViewController {
             motionManager.startDeviceMotionUpdates(to: OperationQueue.current!) { (data, error) in
                 
                 let angle = self.degrees(radians: (data?.attitude.roll)!)
-                if angle > 100 || angle < -100 {
+                if angle > 150 || angle < -150 {
                     synthesizer.stopSpeaking(at: .immediate)
                     //print("omongan berhenti")
                 }
