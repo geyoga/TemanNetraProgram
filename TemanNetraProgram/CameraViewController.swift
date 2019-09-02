@@ -10,6 +10,7 @@ import UIKit
 import AVFoundation
 import AVKit
 import Vision
+import CoreMotion
 
 let synthesizer = AVSpeechSynthesizer()
 var stopRecognition = false
@@ -19,10 +20,14 @@ class CameraViewController: UIViewController {
     var counter = 0
     var cameraDevice: AVCaptureDevice?
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var buttonCapture: UIButton!
+    
+    var motionManager = CMMotionManager()
     
     var session = AVCaptureSession()
     var tidakYakin = 0
     var requests = [VNRequest]()
+    var rectRequests = [VNRequest]()
     var spokenText: String = ""
     var titikTengahDeviceX: Float = 0
     var titikTengahDeviceY: Float = 0
@@ -53,6 +58,17 @@ class CameraViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        
+        // buat mendeteksi apakah voiceover dalam keadaan nyala atau mati
+        // bug ketika voiceover dinyalain didalam aplikasi
+        if voiceOverCondition == true {
+            print("voice over nyala")
+            buttonCapture.isHidden = false
+        }
+        else {
+            buttonCapture.isHidden = true
+            print("voice over mati")
+        }
         stopRecognition = false
         print("INI camera VIEW CONTROLLER")
         
@@ -69,6 +85,7 @@ class CameraViewController: UIViewController {
         stopRecognition = true
         startLiveVideo()
         startTextRecognition()
+        degreeDetection()
         titikTengahDeviceX = Float(imageView.frame.width/2)
         titikTengahDeviceY = Float(imageView.frame.height/2)
 //        NotificationCenter.default.addObserver(self, selector: #selector(self.announcementFinished(notification:)), name: UIAccessibility.announcementDidFinishNotification, object: nil)
@@ -84,12 +101,7 @@ class CameraViewController: UIViewController {
         
         //startTextDetection()
         // Do any additional setup after loading the view.
-        if voiceOverCondition == true {
-            print("voice over nyala")
-        }
-        else {
-            print("voice over mati")
-        }
+        
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(doubleTapped))
         tap.numberOfTapsRequired = 2
@@ -99,6 +111,32 @@ class CameraViewController: UIViewController {
 //        let tap = UITapGestureRecognizer(target: self, action: #selector(doubleTapped))
 //        tap.numberOfTapsRequired  = 2
 //        self.imageView.addGestureRecognizer(tap)
+    }
+    
+    // fungsi ini digunakan untuk menghentikan voice dengan membalikkan iphone
+    func degreeDetection() {
+        if motionManager.isDeviceMotionAvailable {
+            motionManager.deviceMotionUpdateInterval = 0.05
+            motionManager.startDeviceMotionUpdates(to: OperationQueue.current!) { (data, error) in
+                
+                let angle = self.degrees(radians: (data?.attitude.roll)!)
+                if angle > 150 || angle < -150 {
+                    synthesizer.stopSpeaking(at: .immediate)
+                    //print("omongan berhenti")
+                }
+            }
+        }
+    }
+    
+    override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
+        if motion == .motionShake {
+            synthesizer.stopSpeaking(at: .immediate)
+            //UIAccessibility.post(notification: .announcement, argument: "berhenti")
+        }
+    }
+    
+    func degrees(radians:Double) -> Double {
+        return 180 / .pi * radians
     }
     
 //    @objc private func announcementFinished(notification: Notification) {
@@ -118,12 +156,6 @@ class CameraViewController: UIViewController {
             return true
         }
         
-        override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
-            if motion == .motionShake {
-                synthesizer.stopSpeaking(at: .immediate)
-                //UIAccessibility.post(notification: .announcement, argument: "berhenti")
-            }
-        }
     
     @IBAction func panduanButtonTapped(_ sender: Any) {
         synthesizer.stopSpeaking(at: .immediate)
@@ -169,12 +201,13 @@ class CameraViewController: UIViewController {
     }
     
     func startTextRecognition(){
-            let textRequest = VNRecognizeTextRequest(completionHandler: self.recognizeTextHandler)
-            textRequest.usesLanguageCorrection = false
+        let textRequest = VNRecognizeTextRequest(completionHandler: self.recognizeTextHandler)
         textRequest.usesLanguageCorrection = false
-            self.requests = [textRequest]
+       // textRequest.recognitionLevel = .fast
+                    //textRequest.usesLanguageCorrection = false
+        self.requests = [textRequest]
         }
-        
+    
         func recognizeTextHandler(request: VNRequest, error: Error?){
             if(synthesizer.isSpeaking == false && stopRecognition == false && lagiSave == false)
             {
@@ -200,6 +233,7 @@ class CameraViewController: UIViewController {
                     self.imageView.layer.sublayers?.removeSubrange(1...)
                     for observation in observations
                     {
+                        self.drawRectangle(char: observation)
                         let penampungTitikTengahText = self.highlightWord(char: observation)
                     
                         self.titikTengahTextX = Float(penampungTitikTengahText.x)
@@ -251,7 +285,7 @@ class CameraViewController: UIViewController {
                             guard let candidate = observation.topCandidates(1).first else {continue}
                             self.totalConfidence += candidate.confidence
                             self.observationCounter += 1
-                            self.recognizedText += candidate.string + " "
+                            self.recognizedText += candidate.string + " \n"
                             //print(candidate.confidence)
                         }
                     }
@@ -339,11 +373,23 @@ class CameraViewController: UIViewController {
                         if(self.avgConfidence >= 0.40 && self.counter > 20)
                         {
                             self.recognizedText.removeLast()
-                            synthesizer.stopSpeaking(at: .immediate)
-                            let speechUtterance = AVSpeechUtterance(string: "\(self.recognizedText)")
-                            speechUtterance.voice = AVSpeechSynthesisVoice(language: "id")
-                            synthesizer.speak(speechUtterance)
-//                            UIAccessibility.post(notification: .announcement, argument: self.recognizedText)
+                            
+                            if self.isWrongSpell(text: self.recognizedText) == true {
+                                
+                                synthesizer.stopSpeaking(at: .immediate)
+                                let speechUtterance = AVSpeechUtterance(string: "tulisan terbalik")
+                                speechUtterance.voice = AVSpeechSynthesisVoice(language: "id")
+                                synthesizer.speak(speechUtterance)
+                            }
+                            else {
+                                synthesizer.stopSpeaking(at: .immediate)
+                                let speechUtterance = AVSpeechUtterance(string: "\(self.recognizedText)")
+                                speechUtterance.voice = AVSpeechSynthesisVoice(language: "id")
+                                synthesizer.speak(speechUtterance)
+                                //                            UIAccessibility.post(notification: .announcement, argument: self.recognizedText)
+                            }
+                            
+                            
                             self.counter = 0
                             self.tidakYakin = 0
                             self.sudahTahan = 1
@@ -371,7 +417,7 @@ class CameraViewController: UIViewController {
         var minX: CGFloat = 0.0
         var maxY: CGFloat = 999.0
         var minY: CGFloat = 0.0
-
+        
         if char.bottomLeft.x < maxX {
             maxX = char.bottomLeft.x
         }
@@ -395,6 +441,29 @@ class CameraViewController: UIViewController {
         //print("Ukuran Text: ", recognizedTextSize)
         
         return CGPoint(x: midX, y: midY)
+    }
+    
+    func drawRectangle(char : VNRecognizedTextObservation) {
+        
+        let myWidth = imageView.frame.size.width
+        let myHeight = imageView.frame.size.height
+
+        let layerRect = CALayer()
+        var rect = char.boundingBox
+        
+        rect.origin.x *= myWidth
+        rect.size.height *= myHeight
+        rect.origin.y = ((1 - rect.origin.y) * myHeight) - rect.size.height
+        rect.size.width *= myWidth
+        
+        layerRect.frame = rect
+        layerRect.borderWidth = 2
+        layerRect.borderColor = UIColor.cyan.cgColor
+        layerRect.cornerRadius = 2
+        layerRect.opacity = 0.5
+        self.cameraView.layer.addSublayer(layerRect)
+        
+        
     }
     
         
@@ -494,7 +563,13 @@ extension CameraViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
         }
     }
     
-    
+    func isWrongSpell(text : String) -> Bool{
+        let checker = UITextChecker()
+        let range = NSRange(location: 0, length: text.utf16.count)
+        let misspelledRange = checker.rangeOfMisspelledWord(in: text, range: range, startingAt: 0, wrap: false, language: "eng_US")
+        
+        return misspelledRange.location != NSNotFound
+    }
     
     
 }
