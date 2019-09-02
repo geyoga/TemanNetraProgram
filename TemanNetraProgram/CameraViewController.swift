@@ -203,7 +203,7 @@ class CameraViewController: UIViewController {
     func startTextRecognition(){
         let textRequest = VNRecognizeTextRequest(completionHandler: self.recognizeTextHandler)
         textRequest.usesLanguageCorrection = false
-        textRequest.recognitionLevel = .fast
+       // textRequest.recognitionLevel = .fast
                     //textRequest.usesLanguageCorrection = false
         self.requests = [textRequest]
         }
@@ -285,7 +285,7 @@ class CameraViewController: UIViewController {
                             guard let candidate = observation.topCandidates(1).first else {continue}
                             self.totalConfidence += candidate.confidence
                             self.observationCounter += 1
-                            self.recognizedText += candidate.string + " "
+                            self.recognizedText += candidate.string + " \n"
                             //print(candidate.confidence)
                         }
                     }
@@ -373,11 +373,23 @@ class CameraViewController: UIViewController {
                         if(self.avgConfidence >= 0.40 && self.counter > 20)
                         {
                             self.recognizedText.removeLast()
-                            synthesizer.stopSpeaking(at: .immediate)
-                            let speechUtterance = AVSpeechUtterance(string: "\(self.recognizedText)")
-                            speechUtterance.voice = AVSpeechSynthesisVoice(language: "id")
-                            synthesizer.speak(speechUtterance)
-//                            UIAccessibility.post(notification: .announcement, argument: self.recognizedText)
+                            
+                            if self.isWrongSpell(text: self.recognizedText) == true {
+                                
+                                synthesizer.stopSpeaking(at: .immediate)
+                                let speechUtterance = AVSpeechUtterance(string: "tulisan terbalik")
+                                speechUtterance.voice = AVSpeechSynthesisVoice(language: "id")
+                                synthesizer.speak(speechUtterance)
+                            }
+                            else {
+                                synthesizer.stopSpeaking(at: .immediate)
+                                let speechUtterance = AVSpeechUtterance(string: "\(self.recognizedText)")
+                                speechUtterance.voice = AVSpeechSynthesisVoice(language: "id")
+                                synthesizer.speak(speechUtterance)
+                                //                            UIAccessibility.post(notification: .announcement, argument: self.recognizedText)
+                            }
+                            
+                            
                             self.counter = 0
                             self.tidakYakin = 0
                             self.sudahTahan = 1
@@ -551,7 +563,13 @@ extension CameraViewController: AVCaptureVideoDataOutputSampleBufferDelegate {
         }
     }
     
-    
+    func isWrongSpell(text : String) -> Bool{
+        let checker = UITextChecker()
+        let range = NSRange(location: 0, length: text.utf16.count)
+        let misspelledRange = checker.rangeOfMisspelledWord(in: text, range: range, startingAt: 0, wrap: false, language: "eng_US")
+        
+        return misspelledRange.location != NSNotFound
+    }
     
     
 }
