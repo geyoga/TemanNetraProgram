@@ -27,6 +27,7 @@ class CameraViewController: UIViewController {
     var session = AVCaptureSession()
     var tidakYakin = 0
     var requests = [VNRequest]()
+    var rectRequests = [VNRequest]()
     var spokenText: String = ""
     var titikTengahDeviceX: Float = 0
     var titikTengahDeviceY: Float = 0
@@ -57,11 +58,15 @@ class CameraViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        
+        // buat mendeteksi apakah voiceover dalam keadaan nyala atau mati
+        // bug ketika voiceover dinyalain didalam aplikasi
         if voiceOverCondition == true {
             print("voice over nyala")
+            buttonCapture.isHidden = false
         }
         else {
-            buttonCapture.removeFromSuperview()
+            buttonCapture.isHidden = true
             print("voice over mati")
         }
         stopRecognition = false
@@ -108,6 +113,7 @@ class CameraViewController: UIViewController {
 //        self.imageView.addGestureRecognizer(tap)
     }
     
+    // fungsi ini digunakan untuk menghentikan voice dengan membalikkan iphone
     func degreeDetection() {
         if motionManager.isDeviceMotionAvailable {
             motionManager.deviceMotionUpdateInterval = 0.05
@@ -119,6 +125,13 @@ class CameraViewController: UIViewController {
                     //print("omongan berhenti")
                 }
             }
+        }
+    }
+    
+    override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
+        if motion == .motionShake {
+            synthesizer.stopSpeaking(at: .immediate)
+            //UIAccessibility.post(notification: .announcement, argument: "berhenti")
         }
     }
     
@@ -143,12 +156,6 @@ class CameraViewController: UIViewController {
             return true
         }
         
-        override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
-            if motion == .motionShake {
-                synthesizer.stopSpeaking(at: .immediate)
-                //UIAccessibility.post(notification: .announcement, argument: "berhenti")
-            }
-        }
     
     @IBAction func panduanButtonTapped(_ sender: Any) {
         synthesizer.stopSpeaking(at: .immediate)
@@ -194,12 +201,13 @@ class CameraViewController: UIViewController {
     }
     
     func startTextRecognition(){
-            let textRequest = VNRecognizeTextRequest(completionHandler: self.recognizeTextHandler)
-            textRequest.usesLanguageCorrection = false
+        let textRequest = VNRecognizeTextRequest(completionHandler: self.recognizeTextHandler)
         textRequest.usesLanguageCorrection = false
-            self.requests = [textRequest]
+        textRequest.recognitionLevel = .fast
+                    //textRequest.usesLanguageCorrection = false
+        self.requests = [textRequest]
         }
-        
+    
         func recognizeTextHandler(request: VNRequest, error: Error?){
             if(synthesizer.isSpeaking == false && stopRecognition == false && lagiSave == false)
             {
@@ -225,6 +233,7 @@ class CameraViewController: UIViewController {
                     self.imageView.layer.sublayers?.removeSubrange(1...)
                     for observation in observations
                     {
+                        self.drawRectangle(char: observation)
                         let penampungTitikTengahText = self.highlightWord(char: observation)
                     
                         self.titikTengahTextX = Float(penampungTitikTengahText.x)
@@ -396,7 +405,7 @@ class CameraViewController: UIViewController {
         var minX: CGFloat = 0.0
         var maxY: CGFloat = 999.0
         var minY: CGFloat = 0.0
-
+        
         if char.bottomLeft.x < maxX {
             maxX = char.bottomLeft.x
         }
@@ -420,6 +429,29 @@ class CameraViewController: UIViewController {
         //print("Ukuran Text: ", recognizedTextSize)
         
         return CGPoint(x: midX, y: midY)
+    }
+    
+    func drawRectangle(char : VNRecognizedTextObservation) {
+        
+        let myWidth = imageView.frame.size.width
+        let myHeight = imageView.frame.size.height
+
+        let layerRect = CALayer()
+        var rect = char.boundingBox
+        
+        rect.origin.x *= myWidth
+        rect.size.height *= myHeight
+        rect.origin.y = ((1 - rect.origin.y) * myHeight) - rect.size.height
+        rect.size.width *= myWidth
+        
+        layerRect.frame = rect
+        layerRect.borderWidth = 2
+        layerRect.borderColor = UIColor.cyan.cgColor
+        layerRect.cornerRadius = 2
+        layerRect.opacity = 0.5
+        self.cameraView.layer.addSublayer(layerRect)
+        
+        
     }
     
         
