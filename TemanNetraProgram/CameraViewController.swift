@@ -251,7 +251,7 @@ class CameraViewController: UIViewController {
                             guard let candidate = observation.topCandidates(1).first else {continue}
                             self.totalConfidence += candidate.confidence
                             self.observationCounter += 1
-                            self.recognizedText += candidate.string + " "
+                            self.recognizedText += candidate.string + " \n"
                             //print(candidate.confidence)
                         }
                     }
