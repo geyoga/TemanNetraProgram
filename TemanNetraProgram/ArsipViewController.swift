@@ -27,6 +27,8 @@ class ArsipViewController: UIViewController {
     //var searchTimestamp: [Int: String] = [:]
     var searching = false
     
+    var titleSelected = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         synthesizer.stopSpeaking(at: .immediate)
@@ -77,6 +79,7 @@ class ArsipViewController: UIViewController {
         {
             let destination = segue.destination as! DetailViewController
             destination.detailNote = sender as! String
+            destination.titleNote = self.titleSelected
         }
     }
 }
@@ -116,8 +119,13 @@ extension ArsipViewController: UITableViewDataSource, UITableViewDelegate
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.titleSelected = judulNotes[indexPath.row]
         performSegue(withIdentifier: "ArsipToDetail", sender: isiNotes[indexPath.row])
     }
+    
+    
+    
+    
 }
 
 extension ArsipViewController: UISearchBarDelegate{
