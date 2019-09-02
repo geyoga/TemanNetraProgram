@@ -391,6 +391,12 @@
                                     <action selector="shareButton:" destination="h5x-W9-CFr" id="ax6-9Q-T3v"/>
                                 </connections>
                             </barButtonItem>
+                            <barButtonItem systemItem="trash" id="Nru-L1-TMs">
+                                <color key="tintColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <action selector="deleteButton:" destination="h5x-W9-CFr" id="xjb-Xj-LKn"/>
+                                </connections>
+                            </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>

@@ -12,7 +12,7 @@ import CoreData
 
 class DetailViewController: UIViewController, UITextViewDelegate {
 
-    var detailNote: String?
+    var note:Note!
     
     @IBOutlet weak var detailJudulTextField: UITextView!
     
@@ -25,9 +25,8 @@ class DetailViewController: UIViewController, UITextViewDelegate {
         
         self.detailTextField.resignFirstResponder()
                self.selesaiButtonOutlet.tintColor = UIColor.gray
+        updateData()
     }
-    
-    var titleNote = ""
     
     
     
@@ -40,7 +39,7 @@ class DetailViewController: UIViewController, UITextViewDelegate {
         
        self.detailTextField.becomeFirstResponder()
         self.detailTextField.delegate = self
-        detailTextField.text = detailNote
+        detailTextField.text = note.isiNotes
         print("INI detail VIEW CONTROLLER")
         synthesizer.stopSpeaking(at: .immediate)
 //        let speechUtterance = AVSpeechUtterance(string: detailNote!)
@@ -48,7 +47,7 @@ class DetailViewController: UIViewController, UITextViewDelegate {
 //        synthesizer.speak(speechUtterance)
         
 //        fetchDataLabel()
-        self.detailJudulTextField.text = self.titleNote
+        self.detailJudulTextField.text = note.judulNotes
     }
     
     
@@ -66,7 +65,15 @@ class DetailViewController: UIViewController, UITextViewDelegate {
             synthesizer.stopSpeaking(at: .immediate)
         }
     }
-
+    
+    
+    @IBAction func deleteButton(_ sender: Any) {
+        deleteData()
+//        let fetchRequest: NSFetchRequest<Note> = Note.fetchRequest()
+//        fetchRequest.predicate = NSPredicate.init(format: "NoteID==\(ID)")
+    
+    }
+    
     @IBAction func shareButton(_ sender: Any) {
         
         let activityVC = UIActivityViewController(activityItems: [self.detailTextField.text], applicationActivities: nil)
@@ -75,54 +82,26 @@ class DetailViewController: UIViewController, UITextViewDelegate {
         
     }
     
-    func fetchDataLabel()
-    {
-        let appDelegateLabel = UIApplication.shared.delegate as? AppDelegate
-        guard let managedContext = appDelegateLabel?.persistentContainer.viewContext else { return  }
-        
-        var catatancatatanku = [Note]()
-        
-        do {
-            catatancatatanku = try managedContext.fetch(Note.fetchRequest())
-            
-            for catatan in catatancatatanku
-            {
-                //                judulNotes[tableRowCounter] = note.judulNotes!
-                //                isiNotes[tableRowCounter] = note.isiNotes!
-                //                timestampNotes[tableRowCounter] = Int(note.timestampNotes)
-                //                tempDictionary.updateValue(note.isiNotes!, forKey: Int(note.timestampNotes))
-                //                searchDictionary.updateValue(tempDictionary, forKey: note.judulNotes!)
-//                self.detailJudulTextField.text = catatan.judulNotes ?? ""
-            }
-        } catch  {
-            print("Gagal memanggil")
-        }
-        
-    }
-    
     func updateData()
     {
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         guard let managedContext = appDelegate?.persistentContainer.viewContext else { return  }
-        
-        var notes = [Note]()
-        
-        do {
-            notes = try managedContext.fetch(Note.fetchRequest())
-            
-            for note in notes
-            {
-                //                judulNotes[tableRowCounter] = note.judulNotes!
-                //                isiNotes[tableRowCounter] = note.isiNotes!
-                //                timestampNotes[tableRowCounter] = Int(note.timestampNotes)
-                //                tempDictionary.updateValue(note.isiNotes!, forKey: Int(note.timestampNotes))
-                //                searchDictionary.updateValue(tempDictionary, forKey: note.judulNotes!)
-                
-            }
-        } catch  {
-            print("Gagal memanggil")
+     
+        do{
+            note.judulNotes = detailJudulTextField.text
+            note.isiNotes = detailTextField.text
+            try? managedContext.save()
         }
         
+        
+    }
+    
+    
+    func deleteData() {
+        
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        context.delete(note)
+        navigationController?.popViewController(animated: true)
     }
     
     
