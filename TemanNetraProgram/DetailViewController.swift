@@ -68,7 +68,18 @@ class DetailViewController: UIViewController, UITextViewDelegate {
     
     
     @IBAction func deleteButton(_ sender: Any) {
-        deleteData()
+        
+        let alert = UIAlertController(title: "Hapus Arsip ?", message: "anda tidak dapat mengembalikan arsip yang sudah di hapus", preferredStyle: .alert)
+        
+        let cancel = UIAlertAction(title: "Batal", style: .cancel, handler: nil)
+        let delete = UIAlertAction(title: "Hapus", style: .default) { (_: UIAlertAction!) in
+            self.deleteData()
+            
+        }
+        alert.addAction(cancel)
+        alert.addAction(delete)
+        
+        self.present(alert, animated: true, completion: nil)
 //        let fetchRequest: NSFetchRequest<Note> = Note.fetchRequest()
 //        fetchRequest.predicate = NSPredicate.init(format: "NoteID==\(ID)")
     
@@ -76,7 +87,7 @@ class DetailViewController: UIViewController, UITextViewDelegate {
     
     @IBAction func shareButton(_ sender: Any) {
         
-        let activityVC = UIActivityViewController(activityItems: [self.detailTextField.text], applicationActivities: nil)
+        let activityVC = UIActivityViewController(activityItems: ["Judul :",self.detailJudulTextField.text,"Isi :",self.detailTextField.text], applicationActivities: nil)
         activityVC.popoverPresentationController?.sourceView = self.view
         self.present(activityVC, animated: true, completion: nil)
         

@@ -10,13 +10,14 @@
 		D27CC20A23139FFC0071452E /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D27CC20923139FFC0071452E /* DetailViewController.swift */; };
 		D2D977732312FD3C009BDFE6 /* ArsipCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D977722312FD3C009BDFE6 /* ArsipCell.swift */; };
 		D2D977752312FDD4009BDFE6 /* ArsipViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2D977742312FDD4009BDFE6 /* ArsipViewController.swift */; };
+		D307792B231E36C100CAEA00 /* WelcomePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D307792A231E36C100CAEA00 /* WelcomePageViewController.swift */; };
+		D307792E231E421700CAEA00 /* GuideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D307792D231E421700CAEA00 /* GuideViewController.swift */; };
 		D328F727230C340300511884 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D328F726230C340300511884 /* AppDelegate.swift */; };
 		D328F729230C340300511884 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D328F728230C340300511884 /* ViewController.swift */; };
 		D328F72C230C340300511884 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D328F72A230C340300511884 /* Main.storyboard */; };
 		D328F72F230C340300511884 /* TemanNetraProgram.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D328F72D230C340300511884 /* TemanNetraProgram.xcdatamodeld */; };
 		D328F731230C340400511884 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D328F730230C340400511884 /* Assets.xcassets */; };
 		D328F734230C340400511884 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D328F732230C340400511884 /* LaunchScreen.storyboard */; };
-		D328F73E230C3D2400511884 /* OnBoardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D328F73D230C3D2400511884 /* OnBoardingViewController.swift */; };
 		D328F740230C42CF00511884 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D328F73F230C42CF00511884 /* CameraViewController.swift */; };
 		D3540F3B230EB770009A7439 /* Preview.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3540F3A230EB770009A7439 /* Preview.swift */; };
 /* End PBXBuildFile section */
@@ -25,6 +26,8 @@
 		D27CC20923139FFC0071452E /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		D2D977722312FD3C009BDFE6 /* ArsipCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArsipCell.swift; sourceTree = "<group>"; };
 		D2D977742312FDD4009BDFE6 /* ArsipViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArsipViewController.swift; sourceTree = "<group>"; };
+		D307792A231E36C100CAEA00 /* WelcomePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomePageViewController.swift; sourceTree = "<group>"; };
+		D307792D231E421700CAEA00 /* GuideViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideViewController.swift; sourceTree = "<group>"; };
 		D328F723230C340300511884 /* TemanNetraProgram.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TemanNetraProgram.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D328F726230C340300511884 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D328F728230C340300511884 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -33,7 +36,6 @@
 		D328F730230C340400511884 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D328F733230C340400511884 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D328F735230C340400511884 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D328F73D230C3D2400511884 /* OnBoardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoardingViewController.swift; sourceTree = "<group>"; };
 		D328F73F230C42CF00511884 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		D3540F3A230EB770009A7439 /* Preview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Preview.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -49,6 +51,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D307792C231E419600CAEA00 /* On Boarding */ = {
+			isa = PBXGroup;
+			children = (
+				D307792A231E36C100CAEA00 /* WelcomePageViewController.swift */,
+				D307792D231E421700CAEA00 /* GuideViewController.swift */,
+			);
+			path = "On Boarding";
+			sourceTree = "<group>";
+		};
 		D328F71A230C340300511884 = {
 			isa = PBXGroup;
 			children = (
@@ -68,10 +79,10 @@
 		D328F725230C340300511884 /* TemanNetraProgram */ = {
 			isa = PBXGroup;
 			children = (
+				D307792C231E419600CAEA00 /* On Boarding */,
 				D328F726230C340300511884 /* AppDelegate.swift */,
 				D328F728230C340300511884 /* ViewController.swift */,
 				D328F73F230C42CF00511884 /* CameraViewController.swift */,
-				D328F73D230C3D2400511884 /* OnBoardingViewController.swift */,
 				D328F72A230C340300511884 /* Main.storyboard */,
 				D2D977742312FDD4009BDFE6 /* ArsipViewController.swift */,
 				D27CC20923139FFC0071452E /* DetailViewController.swift */,
@@ -160,11 +171,12 @@
 				D328F72F230C340300511884 /* TemanNetraProgram.xcdatamodeld in Sources */,
 				D3540F3B230EB770009A7439 /* Preview.swift in Sources */,
 				D2D977752312FDD4009BDFE6 /* ArsipViewController.swift in Sources */,
+				D307792B231E36C100CAEA00 /* WelcomePageViewController.swift in Sources */,
 				D328F740230C42CF00511884 /* CameraViewController.swift in Sources */,
+				D307792E231E421700CAEA00 /* GuideViewController.swift in Sources */,
 				D328F729230C340300511884 /* ViewController.swift in Sources */,
 				D2D977732312FD3C009BDFE6 /* ArsipCell.swift in Sources */,
 				D328F727230C340300511884 /* AppDelegate.swift in Sources */,
-				D328F73E230C3D2400511884 /* OnBoardingViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
