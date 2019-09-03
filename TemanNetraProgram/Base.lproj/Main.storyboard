@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14865.1" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Sdv-Pb-KDL">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14810.11" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Sdv-Pb-KDL">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14819.2"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14766.13"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -262,7 +262,9 @@
                         <viewLayoutGuide key="safeArea" id="B8K-mW-rpb"/>
                     </view>
                     <tabBarItem key="tabBarItem" systemItem="search" id="OQe-mL-lqT"/>
-                    <navigationItem key="navigationItem" id="8DV-oY-xD4"/>
+                    <navigationItem key="navigationItem" id="8DV-oY-xD4">
+                        <barButtonItem key="backBarButtonItem" title="Kamera" id="0jy-ek-eaP"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="buttonCapture" destination="MaD-ev-ab9" id="dQc-sA-piH"/>
                         <outlet property="imageView" destination="Pfn-Tr-aJW" id="Xjv-id-l5d"/>
@@ -281,7 +283,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="LXX-VH-aqf">
-                                <rect key="frame" x="0.0" y="100" width="414" height="708"/>
+                                <rect key="frame" x="0.0" y="88" width="414" height="720"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ArsipCell" textLabel="GpH-uW-QoL" detailTextLabel="YwQ-6O-n9C" style="IBUITableViewCellStyleValue1" id="fW4-8H-Uqr" customClass="ArsipCell" customModule="TemanNetraProgram" customModuleProvider="target">
@@ -292,14 +294,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="GpH-uW-QoL">
-                                                    <rect key="frame" x="20.000000000000004" y="11.999999999999998" width="33.333333333333336" height="20.333333333333332"/>
+                                                    <rect key="frame" x="20.000000000000004" y="11.999999999999998" width="33.333333333333343" height="20.333333333333329"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="YwQ-6O-n9C">
-                                                    <rect key="frame" x="350" y="11.999999999999998" width="44" height="20.333333333333332"/>
+                                                    <rect key="frame" x="350" y="11.999999999999998" width="44" height="20.333333333333329"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -319,7 +321,7 @@
                                 </connections>
                             </tableView>
                             <searchBar contentMode="redraw" showsCancelButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Lmj-Nx-qcW">
-                                <rect key="frame" x="0.0" y="56" width="414" height="44"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="2SY-vk-FQz"/>
                                 </constraints>
@@ -341,7 +343,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="0gl-qe-iYS"/>
                     </view>
-                    <navigationItem key="navigationItem" id="9cm-A7-5Qq"/>
+                    <navigationItem key="navigationItem" id="9cm-A7-5Qq">
+                        <barButtonItem key="backBarButtonItem" title="Arsip" id="1km-qP-vqP"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="arsipTableView" destination="LXX-VH-aqf" id="qfV-Jq-YDD"/>
                         <segue destination="h5x-W9-CFr" kind="show" identifier="ArsipToDetail" id="tmK-Uv-cXs"/>
@@ -363,15 +367,15 @@
                                 <rect key="frame" x="20" y="149" width="374" height="650"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="dfdf" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="M7h-TU-gTS">
                                 <rect key="frame" x="20" y="92" width="374" height="51"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="24"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
@@ -380,6 +384,7 @@
                         <viewLayoutGuide key="safeArea" id="Tyw-bk-5Mb"/>
                     </view>
                     <navigationItem key="navigationItem" id="uJg-r2-sGh">
+                        <barButtonItem key="backBarButtonItem" title="Arsip" id="8AS-M7-q3K"/>
                         <rightBarButtonItems>
                             <barButtonItem title="Selesai" id="Rtm-Ur-hHn">
                                 <connections>

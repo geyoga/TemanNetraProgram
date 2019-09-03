@@ -21,14 +21,26 @@ class DetailViewController: UIViewController, UITextViewDelegate {
     
     @IBOutlet weak var selesaiButtonOutlet: UIBarButtonItem!
     
-    @IBAction func selesaiButtonAction(_ sender: Any) {
+    @IBAction func selesaiButtonAction(_ sender: UIButton) {
         
-        self.detailTextField.resignFirstResponder()
-               self.selesaiButtonOutlet.tintColor = UIColor.gray
+      self.view.endEditing(true)
+                self.selesaiButtonOutlet.tintColor = UIColor.gray
+        
         updateData()
+        
+        endButton()
+        
+        
+        
     }
     
-    
+    func endButton() {
+        UIView.animate(withDuration: 0.3, delay: 0.0, options: .curveLinear, animations: {
+          
+        })
+        
+        selesaiButtonOutlet.isEnabled = false
+    }
     
     
     override func viewDidLoad() {
@@ -36,9 +48,10 @@ class DetailViewController: UIViewController, UITextViewDelegate {
 
         // Do any additional setup after loading the view.
         
+        //text view//
         
-       self.detailTextField.becomeFirstResponder()
         self.detailTextField.delegate = self
+        self.detailJudulTextField.delegate = self
         detailTextField.text = note.isiNotes
         print("INI detail VIEW CONTROLLER")
         synthesizer.stopSpeaking(at: .immediate)
@@ -47,13 +60,48 @@ class DetailViewController: UIViewController, UITextViewDelegate {
 //        synthesizer.speak(speechUtterance)
         
 //        fetchDataLabel()
+        
+        
+        
         self.detailJudulTextField.text = note.judulNotes
+        
+        
+        //moving view//
+        
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
+        notificationCenter.addObserver(self, selector: #selector(adjustForKeyboard), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+    }
+    
+    @objc func adjustForKeyboard(notification: Notification)
+    {
+        let userInfo = notification.userInfo!
+        
+        let keyboardScreenEndFrame = (userInfo[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+        
+        let keyboardViewEndFrame = view.convert(keyboardScreenEndFrame, from: view.window)
+        
+        if notification.name == UIResponder.keyboardWillHideNotification {
+            detailTextField.contentInset = UIEdgeInsets.zero
+        } else {
+            detailTextField.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardViewEndFrame.height, right: 0)
+        }
+        detailTextField.scrollIndicatorInsets = detailTextField.contentInset
+        
+        let selectedRange = detailTextField.selectedRange
+        detailTextField.scrollRangeToVisible(selectedRange)
+        
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        self.selesaiButtonOutlet.isEnabled = true
     }
     
     
     func textViewDidBeginEditing(_ textView: UITextView) {
         
         self.selesaiButtonOutlet.tintColor = UIColor(red: 0, green: 122.0/255.0, blue: 1, alpha: 1)
+        self.selesaiButtonOutlet.isEnabled = true
     }
     
     override func becomeFirstResponder() -> Bool {
@@ -106,3 +154,5 @@ class DetailViewController: UIViewController, UITextViewDelegate {
     
     
 }
+
+
