@@ -159,7 +159,7 @@ class CameraViewController: UIViewController {
     
     @IBAction func panduanButtonTapped(_ sender: Any) {
         synthesizer.stopSpeaking(at: .immediate)
-        let speechUtterance = AVSpeechUtterance(string: "Arahkan kamera ke media cetak yang ingin anda baca. Ikuti arahan untuk memastikan tulisan tersebut dapat dibaca oleh aplikasi. Guncangkan ponsel untuk berhenti membaca dan memindai ulang tulisan. Ketuk layar ponsel dua kali untuk menyimpan tulisan ke dalam arsip. Buka arsip untuk membaca ulang catatan yang telah anda simpan.")
+        let speechUtterance = AVSpeechUtterance(string: "Arahkan kamera ke media cetak yang ingin anda baca. Ikuti arahan untuk memastikan tulisan tersebut dapat dibaca oleh aplikasi. Balikkan ponsel untuk berhenti membaca dan memindai ulang tulisan. Ketuk layar ponsel dua kali untuk menyimpan tulisan ke dalam arsip. Buka arsip untuk membaca ulang catatan yang telah anda simpan.")
         speechUtterance.voice = AVSpeechSynthesisVoice(language: "id")
         synthesizer.speak(speechUtterance)
     }
