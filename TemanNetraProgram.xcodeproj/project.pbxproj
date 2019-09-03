@@ -28,7 +28,7 @@
 		D2D977742312FDD4009BDFE6 /* ArsipViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArsipViewController.swift; sourceTree = "<group>"; };
 		D307792A231E36C100CAEA00 /* WelcomePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomePageViewController.swift; sourceTree = "<group>"; };
 		D307792D231E421700CAEA00 /* GuideViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideViewController.swift; sourceTree = "<group>"; };
-		D328F723230C340300511884 /* TemanNetraProgram.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TemanNetraProgram.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D328F723230C340300511884 /* Teman Netra.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Teman Netra.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D328F726230C340300511884 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D328F728230C340300511884 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		D328F72B230C340300511884 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -71,7 +71,7 @@
 		D328F724230C340300511884 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D328F723230C340300511884 /* TemanNetraProgram.app */,
+				D328F723230C340300511884 /* Teman Netra.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -113,7 +113,7 @@
 			);
 			name = TemanNetraProgram;
 			productName = TemanNetraProgram;
-			productReference = D328F723230C340300511884 /* TemanNetraProgram.app */;
+			productReference = D328F723230C340300511884 /* Teman Netra.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -331,7 +331,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.geyogabase.TemanNetraProgram;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Teman Netra";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -350,7 +350,7 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.geyogabase.TemanNetraProgram;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Teman Netra";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
