@@ -19,6 +19,7 @@ class ArsipViewController: UIViewController {
 //    var tableRowCounter = 0
     var notes:[Note] = []
     var searchedNotes: [Note] = []
+    var counterJudul = 0
    
     
     @IBOutlet weak var arsipTableView: UITableView!
@@ -100,7 +101,7 @@ extension ArsipViewController: UITableViewDataSource, UITableViewDelegate
         if searching
         {
             return searchedNotes.count
-        }else
+        }else 
         {
             return notes.count
         }
@@ -153,10 +154,22 @@ extension ArsipViewController: UISearchBarDelegate{
 //        searchJudul = searchDictionary.filter({$0.key.lowercased().prefix(searchText.count) == searchText.lowercased()})
 //        searchJudul = judulNotes.filter({$0.lowercased().contains(searchText.lowercased())})
 //        searchJudul = judulNotes.filter({$0.lowercased().prefix(searchText.count) == searchText.lowercased()})
+        if(searchText == "")
+        {
+            fetchData()
+            print("masuk sini")
+            searching = false
+            searchBar.text = ""
+            
+        }
+        else
+        {
         searchedNotes = notes.filter{($0.judulNotes?.lowercased().contains(searchText.lowercased()))!}
         searching = true
         arsipTableView.reloadData()
+        }
     }
+    
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searching = false
